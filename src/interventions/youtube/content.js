@@ -1,9 +1,9 @@
 const isActive = true;
 
 /**
- * Home recomendations state
- * @type {"hidden" | "limited" | "visible"}
- */
+   * Home recomendations state
+   * @type {"hidden" | "limited" | "visible"}
+   */
 const homeRecommendationsState = 'limited';
 const homeRecommendationsToShow = 2;
 const hideHomeFeedFilterBar = true;
@@ -12,29 +12,39 @@ const grayNotificationCount = true;
 
 const docEl = document.documentElement;
 
+function addCSS(id, css) {
+  if (document.getElementById(id)) return;
+  const style = document.createElement('style');
+  document.head.appendChild(style);
+  style.type = 'text/css';
+  style.id = id;
+  style.appendChild(document.createTextNode(css));
+}
+
+function patchCSS(id, css) {
+  const style = document.getElementById(id);
+  if (!style) return;
+
+  style.replaceChild(
+    document.createTextNode(css),
+    style.childNodes[0],
+  );
+}
+
+function patchOrAddPatchCSS(id, css) {
+  const style = document.getElementById(id);
+  if (!style) { addCSS(id, css); return; }
+  patchCSS(id, css);
+}
+
 function dynamicLimitHomeRecommendations() {
   const css = (recommendationNum) => `
-  [data-attention-active][data-home-recommendations-state="limited"] ytd-rich-item-renderer:nth-child(n + ${recommendationNum + 1
+    [data-attention-active][data-home-recommendations-state="limited"] ytd-rich-item-renderer:nth-child(n + ${recommendationNum + 1
 }) {
-    display: none;
-  }`;
+      display: none;
+    }`;
 
-  const style = document.getElementById('rule-home-recommendations-to-show');
-
-  if (!style) {
-    const newStyle = document.createElement('style');
-    document.head.appendChild(newStyle);
-    newStyle.type = 'text/css';
-    newStyle.id = 'rule-home-recommendations-to-show';
-    newStyle.appendChild(
-      document.createTextNode(css(homeRecommendationsToShow)),
-    );
-  } else {
-    style.replaceChild(
-      document.createTextNode(css(homeRecommendationsToShow)),
-      style.childNodes[0],
-    );
-  }
+  patchOrAddPatchCSS('rule-home-recommendations-to-show', css(homeRecommendationsToShow));
 }
 
 /**
