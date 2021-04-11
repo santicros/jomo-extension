@@ -30,6 +30,12 @@
       "css": ["src/interventions/youtube/content.css"],
       "js": ["src/interventions/youtube/content.js"],
       "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.twitter.com/*", "*://twitter.com/*"],
+      "css": ["src/interventions/twitter/content.css"],
+      "js": ["src/interventions/twitter/content.js"],
+      "run_at": "document_start"
     }
   ],
   "permissions": []

@@ -1,0 +1,23 @@
+/* -------------- ASIDE RIGHT -------------- */
+
+/* You might like */
+aside[role="complementary"] {
+    opacity: 0.1;
+}
+
+/* What's happening */
+[aria-label="Timeline: Trending now"] {
+    opacity: 0.1;
+}
+
+
+/* -------------- WITHOUT SIGNUP -------------- */
+/* Footer Don't miss what's happening */
+#layers > div.css-1dbjc4n.r-aqfbo4.r-1p0dtai.r-1d2f490.r-12vffkv.r-1xcajam.r-zchlnj {
+    opacity: 0.1;
+}
+
+/* Aside New to Twitter? */
+[data-testid="sidebarColumn"] [aria-label="Sign up"] {
+    opacity: 0.1;
+}
