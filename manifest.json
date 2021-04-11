@@ -1,0 +1,36 @@
+{
+  "author": "Santi Cros",
+  "homepage_url": "https://santicros.github.io/",
+  "manifest_version": 2,
+  "name": "extension-attention",
+  "version": "0.0.1",
+  "description": "Make internet a healthier place",
+  "icons": {
+    "64": "src/assets/icons/icon.png"
+  },
+  "options_ui": {
+    "page": "src/options/index.html",
+    "open_in_tab": true
+  },
+  "page_action": {
+    "default_icon": {
+      "64": "src/assets/icons/icon.png"
+    },
+    "show_matches": [
+      "*://*.twitter.com/*",
+      "*://*.youtube.com/*",
+      "*://youtube.com/*"
+    ],
+    "default_popup": "src/popup/index.html",
+    "default_title": "disconnect page"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*", "*://youtube.com/*"],
+      "css": ["src/interventions/youtube/content.css"],
+      "js": ["src/interventions/youtube/content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": []
+}

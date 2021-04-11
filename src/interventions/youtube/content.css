@@ -1,0 +1,39 @@
+/* HOME */
+
+#secondary {
+  display: none;
+}
+
+[data-home-recommendations-state="hidden"] ytd-browse {
+  display: none;
+}
+
+[data-attention-active] ytd-rich-section-renderer {
+  display: none;
+}
+
+/* [data-attention-active] ytd-rich-item-renderer:nth-child(n + 4) {
+  display: none;
+} */
+
+[data-attention-active] .ghost-grid.ytd-ghost-grid-renderer {
+  display: none !important;
+}
+[data-attention-active] ytd-continuation-item-renderer {
+  display: none !important;
+}
+
+
+
+/* VIDEO SCREEN */
+/* #secondary {
+    display: none;
+}
+
+#player.skeleton.flexy #player-wrap {
+    width: 100%!important;
+} */
+
+/* #secondary-inner {
+    display: none;
+} */
