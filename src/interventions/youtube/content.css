@@ -1,10 +1,6 @@
 /* HOME */
 
-#secondary {
-  display: none;
-}
-
-[data-home-recommendations-state="hidden"] ytd-browse {
+[data-attention-active][data-home-recommendations-state="hidden"] ytd-browse {
   display: none;
 }
 
@@ -23,7 +19,22 @@
   display: none !important;
 }
 
+[data-attention-active][data-hide-home-feed-filter-bar]
+  ytd-feed-filter-chip-bar-renderer {
+  display: none;
+}
 
+[data-attention-active][data-hide-explore-tab-sidebar]
+  ytd-mini-guide-entry-renderer[aria-label="Explore"] {
+  display: none;
+}
+[data-attention-active][data-hide-explore-tab-sidebar] [title="Explore"] {
+  display: none !important;
+}
+
+[data-attention-active][data-gray-notification-count] #notification-count {
+  background: var(--yt-opalescence-dark-grey)) !important;
+}
 
 /* VIDEO SCREEN */
 /* #secondary {

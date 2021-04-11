@@ -10,7 +10,9 @@
   },
   "options_ui": {
     "page": "src/options/index.html",
-    "open_in_tab": true
+    "open_in_tab": true,
+    "browser_style": false,
+    "chrome_style": false
   },
   "page_action": {
     "default_icon": {
@@ -38,5 +40,6 @@
       "run_at": "document_start"
     }
   ],
-  "permissions": []
+  "permissions": [],
+  "web_accessible_resources": []
 }

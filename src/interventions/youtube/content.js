@@ -6,6 +6,9 @@ const isActive = true;
  */
 const homeRecommendationsState = 'limited';
 const homeRecommendationsToShow = 3;
+const hideHomeFeedFilterBar = true;
+const hideExploreTabSidebar = true;
+const grayNotificationCount = true;
 
 function limitHomeRecommendations() {
   // console.log("loaded", event)
@@ -25,10 +28,6 @@ function limitHomeRecommendations() {
  */
 function startBeforeDOMLoaded() {
   document.documentElement.dataset.attentionActive = true;
-
-  if (homeRecommendationsState !== 'visible') {
-    document.documentElement.dataset.homeRecommendationsState = homeRecommendationsState;
-  }
 }
 
 /**
@@ -40,10 +39,12 @@ function startOnDOMLoaded() {
   }
 }
 
-function onDOMLoaded() {
-  if (!isActive) return;
-  startOnDOMLoaded();
+if (isActive) {
+  startBeforeDOMLoaded();
+  document.addEventListener('DOMContentLoaded', startOnDOMLoaded);
 }
 
-if (isActive) startBeforeDOMLoaded();
-document.addEventListener('DOMContentLoaded', onDOMLoaded);
+if (homeRecommendationsState !== 'visible') { document.documentElement.dataset.homeRecommendationsState = homeRecommendationsState; }
+if (hideHomeFeedFilterBar) document.documentElement.dataset.hideHomeFeedFilterBar = true;
+if (hideExploreTabSidebar) document.documentElement.dataset.hideExploreTabSidebar = true;
+if (grayNotificationCount) document.documentElement.dataset.grayNotificationCount = true;
