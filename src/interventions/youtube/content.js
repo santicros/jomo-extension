@@ -5,29 +5,43 @@ const isActive = true;
  * @type {"hidden" | "limited" | "visible"}
  */
 const homeRecommendationsState = 'limited';
-const homeRecommendationsToShow = 3;
+const homeRecommendationsToShow = 2;
 const hideHomeFeedFilterBar = true;
 const hideExploreTabSidebar = true;
 const grayNotificationCount = true;
 
-function limitHomeRecommendations() {
-  // console.log("loaded", event)
-  // console.log("styleSheets", window.document.styleSheets)
-  const sheet = window.document.styleSheets[5];
-  sheet.insertRule(
-    `[data-attention-active] ytd-rich-item-renderer:nth-child(n + ${homeRecommendationsToShow + 1
-    }) {
-              display: none;
-        }`,
-    0,
-  );
+const docEl = document.documentElement;
+
+function dynamicLimitHomeRecommendations() {
+  const css = (recommendationNum) => `
+  [data-attention-active][data-home-recommendations-state="limited"] ytd-rich-item-renderer:nth-child(n + ${recommendationNum + 1
+}) {
+    display: none;
+  }`;
+
+  const style = document.getElementById('rule-home-recommendations-to-show');
+
+  if (!style) {
+    const newStyle = document.createElement('style');
+    document.head.appendChild(newStyle);
+    newStyle.type = 'text/css';
+    newStyle.id = 'rule-home-recommendations-to-show';
+    newStyle.appendChild(
+      document.createTextNode(css(homeRecommendationsToShow)),
+    );
+  } else {
+    style.replaceChild(
+      document.createTextNode(css(homeRecommendationsToShow)),
+      style.childNodes[0],
+    );
+  }
 }
 
 /**
  * Main function executed before DOM loaded
  */
 function startBeforeDOMLoaded() {
-  document.documentElement.dataset.attentionActive = true;
+  docEl.dataset.attentionActive = true;
 }
 
 /**
@@ -35,16 +49,34 @@ function startBeforeDOMLoaded() {
  */
 function startOnDOMLoaded() {
   if (homeRecommendationsState === 'limited') {
-    limitHomeRecommendations();
+    dynamicLimitHomeRecommendations();
   }
 }
 
 if (isActive) {
   startBeforeDOMLoaded();
-  document.addEventListener('DOMContentLoaded', startOnDOMLoaded);
+  if (document.readyState === 'complete') {
+    startOnDOMLoaded();
+  } else {
+    document.addEventListener('DOMContentLoaded', startOnDOMLoaded);
+  }
 }
 
-if (homeRecommendationsState !== 'visible') { document.documentElement.dataset.homeRecommendationsState = homeRecommendationsState; }
-if (hideHomeFeedFilterBar) document.documentElement.dataset.hideHomeFeedFilterBar = true;
-if (hideExploreTabSidebar) document.documentElement.dataset.hideExploreTabSidebar = true;
-if (grayNotificationCount) document.documentElement.dataset.grayNotificationCount = true;
+if (homeRecommendationsState) {
+  docEl.dataset.homeRecommendationsState = homeRecommendationsState;
+}
+if (hideHomeFeedFilterBar) {
+  docEl.dataset.hideHomeFeedFilterBar = true;
+} else {
+  delete docEl.dataset.hideHomeFeedFilterBar;
+}
+if (hideExploreTabSidebar) {
+  docEl.dataset.hideExploreTabSidebar = true;
+} else {
+  delete docEl.dataset.hideExploreTabSidebar;
+}
+if (grayNotificationCount) {
+  docEl.dataset.grayNotificationCount = true;
+} else {
+  delete docEl.dataset.grayNotificationCount;
+}

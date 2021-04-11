@@ -1,5 +1,4 @@
-/* HOME */
-
+/* -------------- HOME -------------- */
 [data-attention-active][data-home-recommendations-state="hidden"] ytd-browse {
   display: none;
 }
@@ -8,6 +7,7 @@
   display: none;
 }
 
+/* Dynamic recommendation limit. Set with JavaScript */
 /* [data-attention-active] ytd-rich-item-renderer:nth-child(n + 4) {
   display: none;
 } */
@@ -19,24 +19,27 @@
   display: none !important;
 }
 
+/* Filters Bar */
 [data-attention-active][data-hide-home-feed-filter-bar]
   ytd-feed-filter-chip-bar-renderer {
   display: none;
 }
 
+/* Explore Button Sidebar */
 [data-attention-active][data-hide-explore-tab-sidebar]
-  ytd-mini-guide-entry-renderer[aria-label="Explore"] {
+  ytd-mini-guide-entry-renderer:nth-child(2) {
   display: none;
 }
-[data-attention-active][data-hide-explore-tab-sidebar] [title="Explore"] {
+[data-attention-active][data-hide-explore-tab-sidebar] ytd-guide-section-renderer:nth-child(1) > div:nth-child(2) > ytd-guide-entry-renderer:nth-child(2) {
   display: none !important;
 }
 
+/* Notification Icon */
 [data-attention-active][data-gray-notification-count] #notification-count {
   background: var(--yt-opalescence-dark-grey)) !important;
 }
 
-/* VIDEO SCREEN */
+/* -------------- VIDEO PAGE -------------- */
 /* #secondary {
     display: none;
 }
@@ -48,3 +51,10 @@
 /* #secondary-inner {
     display: none;
 } */
+
+
+/* -------------- SEARCH PAGE -------------- */
+
+/* -------------- SUBSCRIPTIONS PAGE -------------- */
+
+/* -------------- EXPLORE PAGE -------------- */
