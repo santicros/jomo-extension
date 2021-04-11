@@ -1,16 +1,19 @@
 {
   "name": "extension-attention",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "author": {
+    "name": "Santi Cros",
+    "email": "scros97@gmail.com"
+  },
+  "description": "Browser extension for modern browsers to make internet a healthier place",
+  "keywords": [],
+  "license": "ISC",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:firefox": "web-ext run",
     "lint": "eslint --fix . && web-ext lint"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
