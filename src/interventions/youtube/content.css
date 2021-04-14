@@ -1,60 +1,148 @@
-/* -------------- HOME -------------- */
-[data-attention-active][data-home-recommendations-state="hidden"] ytd-browse {
+/* ---------------------------- HOME --------------------------- */
+html[data-attention-active][data-home-recommendations-state='hidden']
+  ytd-browse {
   display: none;
 }
 
-[data-attention-active] ytd-rich-section-renderer {
+html[data-attention-active] ytd-rich-section-renderer {
   display: none;
 }
 
-/* Dynamic recommendation limit. Set with JavaScript */
-/* [data-attention-active] ytd-rich-item-renderer:nth-child(n + 4) {
-  display: none;
-} */
-
-[data-attention-active] .ghost-grid.ytd-ghost-grid-renderer {
+html[data-attention-active] .ghost-grid.ytd-ghost-grid-renderer {
   display: none !important;
 }
-[data-attention-active] ytd-continuation-item-renderer {
+html[data-attention-active] ytd-continuation-item-renderer {
   display: none !important;
 }
 
 /* Filters Bar */
-[data-attention-active][data-hide-home-feed-filter-bar]
+html[data-attention-active][data-hide-home-feed-filter-bar]
   ytd-feed-filter-chip-bar-renderer {
   display: none;
 }
 
 /* Explore Button Sidebar */
-[data-attention-active][data-hide-explore-tab-sidebar]
+html[data-attention-active][data-hide-explore-tab-sidebar]
   ytd-mini-guide-entry-renderer:nth-child(2) {
   display: none;
 }
-[data-attention-active][data-hide-explore-tab-sidebar] ytd-guide-section-renderer:nth-child(1) > div:nth-child(2) > ytd-guide-entry-renderer:nth-child(2) {
+html[data-attention-active][data-hide-explore-tab-sidebar]
+  ytd-guide-section-renderer:nth-child(1)
+  > div:nth-child(2)
+  > ytd-guide-entry-renderer:nth-child(2) {
   display: none !important;
 }
 
 /* Notification Icon */
-[data-attention-active][data-gray-notification-count] #notification-count {
-  background: var(--yt-opalescence-dark-grey)) !important;
+html[data-attention-active][data-gray-notification-count] #notification-count {
+  background: red !important;
 }
 
-/* -------------- VIDEO PAGE -------------- */
-/* #secondary {
-    display: none;
+/* Hide home Video View Count */
+ytd-rich-item-renderer #metadata-line > span {
+  display: none !important;
 }
+
+/* Hide images */
+html[data-attention-active][data-previews-state='hidden']
+  ytd-rich-grid-media
+  ytd-thumbnail
+  yt-img-shadow,
+html[data-attention-active][data-previews-state='hoverImg']
+  ytd-rich-grid-media
+  ytd-thumbnail
+  yt-img-shadow,
+html[data-attention-active][data-previews-state='hoverVideo']
+  ytd-rich-grid-media
+  ytd-thumbnail
+  yt-img-shadow {
+  opacity: 0 !important;
+}
+
+/* Hide mouseover video */
+html[data-attention-active][data-previews-state='hidden']
+  ytd-rich-grid-media
+  ytd-thumbnail
+  #mouseover-overlay,
+html[data-attention-active][data-previews-state='hoverImg']
+  ytd-rich-grid-media
+  ytd-thumbnail
+  #mouseover-overlay {
+  display: none !important;
+}
+
+/* Show featured image on hover */
+html[data-attention-active][data-previews-state='hoverImg']
+  ytd-rich-grid-media:hover
+  ytd-thumbnail
+  yt-img-shadow,
+html[data-attention-active][data-previews-state='hoverVideo']
+  ytd-rich-grid-media:hover
+  ytd-thumbnail
+  yt-img-shadow {
+  transition: opacity 0.4s;
+  opacity: 1 !important;
+}
+
+/* Hide Channel Image */
+ytd-rich-item-renderer #details yt-img-shadow {
+  display: none !important;
+}
+
+/* ---------------------------- VIDEO PAGE --------------------------- */
+
+html[data-attention-active] ytd-watch-flexy #secondary-inner {
+  display: none;
+}
+
+/* Hide Video View count */
+ytd-video-primary-info-renderer #info #count {
+  display: none !important;
+}
+
+/* Hide Dot next to View count */
+ytd-video-primary-info-renderer #info #dot {
+  display: none !important;
+}
+
+/* Hide Likes & dislikes */
+ytd-video-primary-info-renderer
+  #top-level-buttons
+  ytd-toggle-button-renderer
+  yt-formatted-string {
+  display: none;
+}
+
+/* Hide Subscribers count */
+#upload-info > #owner-sub-count {
+  display: none;
+}
+
+/* Hide comments */
+html[data-attention-active][data-hide-comments-section] ytd-comments {
+  display: none !important;
+}
+
+html[data-attention-active][data-hide-comments-section]
+  ytd-video-secondary-info-renderer {
+  border-bottom: none !important;
+}
+
+/* Disable content on video screen on end */
+.ytp-ce-element {
+  display: none !important;
+}
+
+/* 
 
 #player.skeleton.flexy #player-wrap {
     width: 100%!important;
 } */
 
-/* #secondary-inner {
-    display: none;
-} */
+/* ---------------------------- SEARCH PAGE --------------------------- */
 
+/* ---------------------------- SUBSCRIPTIONS PAGE --------------------------- */
 
-/* -------------- SEARCH PAGE -------------- */
+/* ---------------------------- EXPLORE PAGE --------------------------- */
 
-/* -------------- SUBSCRIPTIONS PAGE -------------- */
-
-/* -------------- EXPLORE PAGE -------------- */
+/* ---------------------------- CHANNEL PAGE --------------------------- */

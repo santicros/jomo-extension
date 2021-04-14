@@ -3,6 +3,7 @@
   "homepage_url": "https://santicros.github.io/",
   "manifest_version": 2,
   "name": "extension-attention",
+  "short_name": "AttentionLab",
   "version": "0.0.1",
   "description": "Make internet a healthier place",
   "icons": {
@@ -30,7 +31,7 @@
     {
       "matches": ["*://*.youtube.com/*", "*://youtube.com/*"],
       "css": ["src/interventions/youtube/content.css"],
-      "js": ["src/interventions/youtube/content.js"],
+      "js": ["dist/interventions/youtube/content.js"],
       "run_at": "document_start"
     },
     {
