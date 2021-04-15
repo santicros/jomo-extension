@@ -13,7 +13,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "dev:firefox": "web-ext run",
-    "build": "vite build",
+    "build": "npm run build:scripts",
+    "build:scripts": "cd scripts && node build.js",
+    "build:app": "vite build",
     "serve": "vite preview",
     "lint": "eslint --fix . && web-ext lint"
   },

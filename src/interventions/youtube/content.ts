@@ -1,4 +1,3 @@
-// import { patchOrAddPatchCSS } from '../../utils'
 const isActive = true;
 
 type customConfig = {
@@ -12,10 +11,10 @@ type customConfig = {
 };
 
 const config: customConfig = {
-  homeRecommendationsState: 'hidden',
-  homeRecommendationsToShow: 6,
+  homeRecommendationsState: 'limited',
+  homeRecommendationsToShow: 2,
   hideHomeFeedFilterBar: true,
-  previewsState: 'hidden',
+  previewsState: 'hoverImg',
   hideExploreTabSidebar: true,
   grayNotificationCount: true,
   hideCommentsSection: true,
@@ -26,14 +25,14 @@ const docEl = document.documentElement;
 function dynamicLimitHomeRecommendations() {
   const css = (recommendationNum: number) => `
 [data-attention-active][data-home-recommendations-state="limited"] ytd-rich-item-renderer:nth-child(n + ${
-    recommendationNum + 1
-  }) {
+  recommendationNum + 1
+}) {
 display: none;
 }`;
 
   patchOrAddPatchCSS(
     'rule-home-recommendations-to-show',
-    css(config.homeRecommendationsToShow)
+    css(config.homeRecommendationsToShow),
   );
 }
 
@@ -81,3 +80,13 @@ function setDataAttrsObj(configObj: customConfig) {
 }
 
 setDataAttrsObj(config);
+
+browser.runtime.onMessage.addListener((message) => {
+  if (message.command === 'activate') {
+    console.log('activating');
+    docEl.dataset.attentionActive = 'true';
+  } else if (message.command === 'deactivate') {
+    console.log('deactivating');
+    delete docEl.dataset.attentionActive;
+  }
+});

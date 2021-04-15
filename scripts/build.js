@@ -2,11 +2,9 @@
 
 require('esbuild')
   .build({
-    entryPoints: ['../src/interventions/youtube/content.ts'],
-    bundle: false,
+    entryPoints: ['../src/interventions/youtube/content.ts', '../src/utils.ts'],
     format: 'esm',
-    outfile: '../dist/interventions/youtube/content.js',
+    outdir: '../dist',
     target: 'es2020',
-    define: { DEBUG: 'true' },
   })
   .catch(() => process.exit(1));

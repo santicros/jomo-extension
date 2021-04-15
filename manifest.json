@@ -31,7 +31,7 @@
     {
       "matches": ["*://*.youtube.com/*", "*://youtube.com/*"],
       "css": ["src/interventions/youtube/content.css"],
-      "js": ["dist/interventions/youtube/content.js"],
+      "js": ["dist/utils.js", "dist/interventions/youtube/content.js"],
       "run_at": "document_start"
     },
     {
@@ -41,6 +41,8 @@
       "run_at": "document_start"
     }
   ],
-  "permissions": [],
+  "permissions": [
+    "activeTab"
+  ],
   "web_accessible_resources": []
 }

@@ -2,11 +2,10 @@
  * Util to addCSS to a page
  *
  */
-export function addCSS(id: string, css: string) {
+function addCSS(id: string, css: string) {
   if (document.getElementById(id)) return;
   const style = document.createElement('style');
   document.head.appendChild(style);
-  style.type = 'text/css';
   style.id = id;
   style.appendChild(document.createTextNode(css));
 }
@@ -15,7 +14,7 @@ export function addCSS(id: string, css: string) {
  * Util to patch added CSS to a page
  *
  */
-export function patchCSS(id: string, css: string) {
+function patchCSS(id: string, css: string) {
   const style = document.getElementById(id);
   if (!style) return;
 
@@ -25,7 +24,7 @@ export function patchCSS(id: string, css: string) {
 /**
  * Util to patch or add CSS to a page
  */
-export function patchOrAddPatchCSS(id: string, css: string) {
+function patchOrAddPatchCSS(id: string, css: string) {
   const style = document.getElementById(id);
   if (!style) {
     addCSS(id, css);
