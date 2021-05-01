@@ -4,4 +4,4 @@ import { createApp } from 'vue';
 
 import App from './App.vue';
 
-createApp(App).mount('#popupApp');
+createApp(App).mount('#app');
