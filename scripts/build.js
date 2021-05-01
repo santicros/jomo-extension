@@ -1,5 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
 require('esbuild')
   .build({
     entryPoints: ['../src/interventions/youtube/content.ts', '../src/utils.ts'],

@@ -5,6 +5,7 @@
 ```sh
 npm run dev:firefox
 ```
+
 ## Build
 
 ```sh

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "author": {
     "name": "Santi Cros",
-    "email": "scros97@gmail.com"
+    "email": "scros97@gmail.com",
+    "url": "https://santicros.github.io/"
   },
   "description": "Browser extension for modern browsers to make internet a healthier place",
   "keywords": [],
@@ -11,23 +12,36 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
-    "dev:firefox": "web-ext run",
+    "dev:app": "vite",
+    "dev:ext": "web-ext run",
     "build": "npm run build:scripts",
     "build:scripts": "cd scripts && node build.js",
     "build:app": "vite build",
-    "serve": "vite preview",
-    "lint": "eslint --fix . && web-ext lint"
+    "preview:app": "vite preview",
+    "lint": "eslint --fix . && web-ext lint",
+    "format": "prettier --write './**/*.{js,vue,css,md,json,html}' --config ./.prettierrc"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
-    "esbuild": "^0.11.10",
-    "eslint": "^7.24.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
+    "@vitejs/plugin-vue": "^1.2.2",
+    "@vue/compiler-sfc": "^3.0.11",
+    "autoprefixer": "^10.2.5",
+    "esbuild": "^0.11.16",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-vue": "^7.9.0",
+    "postcss": "^8.2.13",
+    "prettier": "^2.2.1",
+    "tailwindcss": "^2.1.2",
     "typescript": "^4.2.4",
-    "vite": "^2.1.5",
-    "web-ext": "^6.0.0"
+    "vite": "^2.2.3",
+    "web-ext": "^6.1.0"
+  },
+  "dependencies": {
+    "vue": "^3.0.11",
+    "xstate": "^4.19.0"
   }
 }

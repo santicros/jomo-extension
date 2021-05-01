@@ -1,16 +1,8 @@
-const isActive = true;
+/* global patchOrAddPatchCSS */
 
-type customConfig = {
-  homeRecommendationsState: 'hidden' | 'limited' | 'visible';
-  homeRecommendationsToShow: number;
-  hideHomeFeedFilterBar: boolean;
-  previewsState: 'hidden' | 'hoverImg' | 'hoverVideo' | 'visible';
-  hideExploreTabSidebar: boolean;
-  grayNotificationCount: boolean;
-  hideCommentsSection: boolean;
-};
+import { youtubeSettings } from './types';
 
-const config: customConfig = {
+const config: youtubeSettings = {
   homeRecommendationsState: 'limited',
   homeRecommendationsToShow: 2,
   hideHomeFeedFilterBar: true,
@@ -22,17 +14,17 @@ const config: customConfig = {
 
 const docEl = document.documentElement;
 
-function dynamicLimitHomeRecommendations() {
-  const css = (recommendationNum: number) => `
+function dynamicLimitHomeRecommendations(recommendationNum: number) {
+  const css = (num: number) => `
 [data-attention-active][data-home-recommendations-state="limited"] ytd-rich-item-renderer:nth-child(n + ${
-  recommendationNum + 1
+  num + 1
 }) {
 display: none;
 }`;
 
   patchOrAddPatchCSS(
     'rule-home-recommendations-to-show',
-    css(config.homeRecommendationsToShow),
+    css(recommendationNum),
   );
 }
 
@@ -48,16 +40,7 @@ function startBeforeDOMLoaded() {
  */
 function startOnDOMLoaded() {
   if (config.homeRecommendationsState === 'limited') {
-    dynamicLimitHomeRecommendations();
-  }
-}
-
-if (isActive) {
-  startBeforeDOMLoaded();
-  if (document.readyState === 'complete') {
-    startOnDOMLoaded();
-  } else {
-    document.addEventListener('DOMContentLoaded', startOnDOMLoaded);
+    dynamicLimitHomeRecommendations(config.homeRecommendationsToShow);
   }
 }
 
@@ -79,8 +62,6 @@ function setDataAttrsObj(configObj: customConfig) {
   });
 }
 
-setDataAttrsObj(config);
-
 browser.runtime.onMessage.addListener((message) => {
   if (message.command === 'activate') {
     console.log('activating');
@@ -90,3 +71,17 @@ browser.runtime.onMessage.addListener((message) => {
     delete docEl.dataset.attentionActive;
   }
 });
+
+function setup(state) {
+  if (state.youtubeIsActive) {
+    startBeforeDOMLoaded();
+    if (document.readyState === 'complete') {
+      startOnDOMLoaded();
+    } else {
+      document.addEventListener('DOMContentLoaded', startOnDOMLoaded);
+    }
+    setDataAttrsObj(config);
+  }
+}
+
+browser.storage.local.get('youtubeIsActive').then(setup);

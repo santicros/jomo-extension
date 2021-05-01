@@ -155,7 +155,7 @@ html[data-attention-active][data-hide-comments-section]
 }
 /* Disable end grid video screenn */
 .html5-endscreen {
-  display: none!important;
+  display: none !important;
 }
 
 /* ---------------------------- SEARCH PAGE --------------------------- */

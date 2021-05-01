@@ -10,7 +10,7 @@
     "64": "src/assets/icons/icon.png"
   },
   "options_ui": {
-    "page": "src/options/index.html",
+    "page": "options.html",
     "open_in_tab": true,
     "browser_style": false,
     "chrome_style": false
@@ -24,7 +24,7 @@
       "*://*.youtube.com/*",
       "*://youtube.com/*"
     ],
-    "default_popup": "src/popup/index.html",
+    "default_popup": "popup.html",
     "default_title": "disconnect page"
   },
   "content_scripts": [
@@ -41,8 +41,11 @@
       "run_at": "document_start"
     }
   ],
-  "permissions": [
-    "activeTab"
-  ],
-  "web_accessible_resources": []
+  "permissions": ["activeTab", "storage"],
+  "web_accessible_resources": [],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "scros97@gmail.com"
+    }
+  }
 }

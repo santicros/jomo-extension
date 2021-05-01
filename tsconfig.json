@@ -5,6 +5,8 @@
     "strict": true,
     "moduleResolution": "node",
     "checkJs": true,
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client"]
   },
   "exclude": ["node_modules", "dist"]
 }
