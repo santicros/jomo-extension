@@ -1,42 +1,8 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { assign, createMachine } from 'xstate';
-import { createModel } from 'xstate/lib/model';
 
+import { toggleMachine } from './toggleMachine';
 import { useMachine } from './useMachine';
-
-const toggleModel = createModel(
-  {
-    count: 0,
-  },
-  {
-    events: {
-      TOGGLE: () => ({}),
-    },
-  }
-);
-
-const toggleMachine = createMachine<typeof toggleModel>(
-  {
-    id: 'toggle',
-    initial: 'inactive',
-    context: toggleModel.initialContext,
-    states: {
-      inactive: { on: { TOGGLE: 'active' } },
-      active: {
-        entry: ['increment'],
-        on: { TOGGLE: 'inactive' },
-      },
-    },
-  },
-  {
-    actions: {
-      increment: assign({
-        count: (context) => context.count + 1,
-      }),
-    },
-  }
-);
 
 @customElement('usemachine-demo')
 export class UsemachineDemo extends LitElement {

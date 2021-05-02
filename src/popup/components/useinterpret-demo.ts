@@ -1,17 +1,8 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { createMachine } from 'xstate';
 
+import { toggleMachine } from './toggleMachine';
 import { useInterpret } from './useInterpret';
-
-const toggleMachine = createMachine({
-  id: 'toggle',
-  initial: 'inactive',
-  states: {
-    inactive: { on: { TOGGLE: 'active' } },
-    active: { on: { TOGGLE: 'inactive' } },
-  },
-});
 
 @customElement('useinterpret-demo')
 export class UseinterpretDemo extends LitElement {
