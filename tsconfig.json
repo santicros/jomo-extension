@@ -6,7 +6,8 @@
     "moduleResolution": "node",
     "checkJs": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "experimentalDecorators": true,
   },
   "exclude": ["node_modules", "dist"]
 }

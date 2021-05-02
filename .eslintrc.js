@@ -5,11 +5,7 @@ module.exports = {
     webextensions: true,
     node: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:vue/vue3-recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
