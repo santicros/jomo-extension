@@ -1,9 +1,20 @@
 export type youtubeSettings = {
   homeRecommendationsState: 'hidden' | 'limited' | 'visible';
-  homeRecommendationsToShow: number;
+  homeRecommendationsLimitedShowNum: number;
   hideHomeFeedFilterBar: boolean;
   previewsState: 'hidden' | 'hoverImg' | 'hoverVideo' | 'visible';
   hideExploreTabSidebar: boolean;
   grayNotificationCount: boolean;
   hideCommentsSection: boolean;
+  hideMetrics: boolean;
+  hideMetricsOptions: {
+    viewCount: boolean;
+    likesAndDislikes: boolean;
+    subscribersCount: boolean;
+  };
+  hideComments: boolean;
+  hideRecommendedSidePanelVideo: boolean;
+  hideRecommendationsBottomVideo: boolean;
+  hideEndingVideoCards: boolean;
+  hideEndingVideoRecommendedGrid: boolean;
 };

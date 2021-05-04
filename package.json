@@ -9,17 +9,15 @@
   "description": "Browser extension for modern browsers to make internet a healthier place",
   "keywords": [],
   "license": "ISC",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev:app": "vite",
     "dev:ext": "web-ext run",
-    "build": "npm run build:scripts",
+    "build": "npm run build:app && npm run build:scripts",
     "build:scripts": "cd scripts && node build.js",
     "build:app": "vite build",
     "preview:app": "vite preview",
     "lint": "eslint --fix . && web-ext lint",
-    "format": "prettier --write './**/*.{js,vue,css,md,json,html}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,ts,css,md,json,html}' --config ./.prettierrc"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.22.0",

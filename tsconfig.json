@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "None",
+    "module": "esnext",
     "strict": true,
     "moduleResolution": "node",
     "checkJs": true,
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
-    "experimentalDecorators": true,
+    "experimentalDecorators": true
   },
   "exclude": ["node_modules", "dist"]
 }

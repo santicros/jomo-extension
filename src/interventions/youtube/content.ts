@@ -2,14 +2,27 @@
 
 import { youtubeSettings } from './types';
 
+const debug = true;
+
 const config: youtubeSettings = {
   homeRecommendationsState: 'limited',
-  homeRecommendationsToShow: 2,
+  homeRecommendationsLimitedShowNum: 2,
   hideHomeFeedFilterBar: true,
-  previewsState: 'hoverImg',
+  previewsState: 'hidden',
   hideExploreTabSidebar: true,
   grayNotificationCount: true,
   hideCommentsSection: true,
+  hideMetrics: true,
+  hideMetricsOptions: {
+    viewCount: true,
+    likesAndDislikes: true,
+    subscribersCount: true,
+  },
+  hideComments: true,
+  hideRecommendedSidePanelVideo: true,
+  hideRecommendationsBottomVideo: true,
+  hideEndingVideoCards: true,
+  hideEndingVideoRecommendedGrid: true,
 };
 
 const docEl = document.documentElement;
@@ -17,14 +30,14 @@ const docEl = document.documentElement;
 function dynamicLimitHomeRecommendations(recommendationNum: number) {
   const css = (num: number) => `
 [data-attention-active][data-home-recommendations-state="limited"] ytd-rich-item-renderer:nth-child(n + ${
-  num + 1
-}) {
+    num + 1
+  }) {
 display: none;
 }`;
 
   patchOrAddPatchCSS(
     'rule-home-recommendations-to-show',
-    css(recommendationNum),
+    css(recommendationNum)
   );
 }
 
@@ -40,7 +53,7 @@ function startBeforeDOMLoaded() {
  */
 function startOnDOMLoaded() {
   if (config.homeRecommendationsState === 'limited') {
-    dynamicLimitHomeRecommendations(config.homeRecommendationsToShow);
+    dynamicLimitHomeRecommendations(config.homeRecommendationsLimitedShowNum);
   }
 }
 
@@ -56,7 +69,7 @@ function setOrDeleteDataAttr(name: string, value: number | boolean | string) {
   docEl.dataset[name] = String(value);
 }
 
-function setDataAttrsObj(configObj: customConfig) {
+function setDataAttrsObj(configObj: youtubeSettings) {
   Object.entries(configObj).forEach(([key, value]) => {
     setOrDeleteDataAttr(key, value);
   });
@@ -84,4 +97,9 @@ function setup(state) {
   }
 }
 
-browser.storage.local.get('youtubeIsActive').then(setup);
+// browser.storage.local.get('youtubeIsActive').then(setup);
+
+if (debug) {
+  setup({ youtubeIsActive: true });
+  docEl.dataset.attentionActive = 'true';
+}

@@ -10,7 +10,7 @@
     "64": "src/assets/icons/icon.png"
   },
   "options_ui": {
-    "page": "options.html",
+    "page": "dist/options.html",
     "open_in_tab": true,
     "browser_style": false,
     "chrome_style": false
@@ -24,7 +24,7 @@
       "*://*.youtube.com/*",
       "*://youtube.com/*"
     ],
-    "default_popup": "popup.html",
+    "default_popup": "dist/popup.html",
     "default_title": "disconnect page"
   },
   "content_scripts": [
