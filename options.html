@@ -4,10 +4,60 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Options</title>
+    <title>Settings | JOMO</title>
+    <link rel="stylesheet" href="./src/preflight.css" />
+    <link rel="stylesheet" href="./src/options/style.css" />
   </head>
   <body>
-    <h1>Options</h1>
     <script type="module" src="./src/options/main.ts"></script>
+    <header>
+      <nav>
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1 class="text-4xl">Settings</h1>
+      <section>
+        <h1>General</h1>
+        <ul>
+          <li>
+            <fieldset>
+              <legend>
+                <h2>Mode</h2>
+              </legend>
+              <input type="radio" id="flexible" name="mode" />
+              <label for="flexible">Flexible</label>
+              <br />
+
+              <input type="radio" id="medium" name="mode" />
+              <label for="medium">Medium</label>
+              <br />
+
+              <input type="radio" id="strict" name="mode" />
+              <label for="strict">Strict</label>
+              <br />
+
+              <input type="radio" id="custom" name="mode" />
+              <label for="custom">Custom</label>
+            </fieldset>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h1>Webpage</h1>
+        <ul>
+          <li>
+            <h2>YouTube</h2>
+            <ul id="youtubeOptions"></ul>
+          </li>
+        </ul>
+      </section>
+      <section>Test</section>
+    </main>
+    <footer></footer>
   </body>
 </html>

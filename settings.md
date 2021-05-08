@@ -32,7 +32,6 @@
   - viewCount
   - likesAndDislikes
   - subscribersCount
-- hideComments
 - hideRecommendedSidePanelVideo
 - hideRecommendationsBottomVideo
 - hideEndingVideoCards

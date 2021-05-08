@@ -1,5 +1,7 @@
 /* global patchOrAddPatchCSS */
 
+import { browser } from 'webextension-polyfill-ts';
+
 import { youtubeSettings } from './types';
 
 const debug = true;

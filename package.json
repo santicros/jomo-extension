@@ -11,33 +11,33 @@
   "license": "ISC",
   "scripts": {
     "dev:app": "vite",
-    "dev:ext": "web-ext run",
+    "dev:ext": "web-ext run --source-dir=dist",
     "build": "npm run build:app && npm run build:scripts",
     "build:scripts": "cd scripts && node build.js",
     "build:app": "vite build",
     "preview:app": "vite preview",
-    "lint": "eslint --fix . && web-ext lint",
+    "lint": "eslint --fix . && web-ext lint --source-dir=dist",
     "format": "prettier --write './**/*.{js,ts,css,md,json,html}' --config ./.prettierrc"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
     "autoprefixer": "^10.2.5",
-    "esbuild": "^0.11.16",
-    "eslint": "^7.25.0",
+    "esbuild": "^0.11.20",
+    "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "postcss": "^8.2.13",
+    "postcss": "^8.2.14",
     "prettier": "^2.2.1",
     "tailwindcss": "^2.1.2",
     "typescript": "^4.2.4",
-    "vite": "^2.2.3",
+    "vite": "^2.2.4",
     "web-ext": "^6.1.0",
     "webextension-polyfill-ts": "^0.25.0"
   },
   "dependencies": {
-    "lit": "*",
-    "xstate": "^4.19.0"
+    "lit": "^2.0.0-rc.2",
+    "xstate": "^4.19.1"
   }
 }

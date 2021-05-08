@@ -12,7 +12,6 @@ export type youtubeSettings = {
     likesAndDislikes: boolean;
     subscribersCount: boolean;
   };
-  hideComments: boolean;
   hideRecommendedSidePanelVideo: boolean;
   hideRecommendationsBottomVideo: boolean;
   hideEndingVideoCards: boolean;
