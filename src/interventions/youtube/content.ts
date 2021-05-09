@@ -20,7 +20,6 @@ const config: youtubeSettings = {
     likesAndDislikes: true,
     subscribersCount: true,
   },
-  hideComments: true,
   hideRecommendedSidePanelVideo: true,
   hideRecommendationsBottomVideo: true,
   hideEndingVideoCards: true,

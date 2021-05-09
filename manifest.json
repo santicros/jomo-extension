@@ -7,37 +7,37 @@
   "version": "0.0.1",
   "description": "Make internet a healthier place",
   "icons": {
-    "64": "src/assets/icons/icon.png"
+    "64": "assets/icons/icon.png"
   },
   "options_ui": {
-    "page": "dist/options.html",
+    "page": "options.html",
     "open_in_tab": true,
     "browser_style": false,
     "chrome_style": false
   },
   "page_action": {
     "default_icon": {
-      "64": "src/assets/icons/icon.png"
+      "64": "assets/icons/icon.png"
     },
     "show_matches": [
       "*://*.twitter.com/*",
       "*://*.youtube.com/*",
       "*://youtube.com/*"
     ],
-    "default_popup": "dist/popup.html",
+    "default_popup": "popup.html",
     "default_title": "disconnect page"
   },
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*", "*://youtube.com/*"],
-      "css": ["src/interventions/youtube/content.css"],
-      "js": ["dist/utils.js", "dist/interventions/youtube/content.js"],
+      "css": ["interventions/youtube/content.css"],
+      "js": ["utils.js", "interventions/youtube/content.js"],
       "run_at": "document_start"
     },
     {
       "matches": ["*://*.twitter.com/*", "*://twitter.com/*"],
-      "css": ["src/interventions/twitter/content.css"],
-      "js": ["src/interventions/twitter/content.js"],
+      "css": ["interventions/twitter/content.css"],
+      "js": ["interventions/twitter/content.js"],
       "run_at": "document_start"
     }
   ],

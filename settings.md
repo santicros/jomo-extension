@@ -12,6 +12,13 @@
   - youtube
   - twitter
 
+
+Sections:
+
+- Recommendations
+- Metrics
+- Hide elements
+
 ## YouTube
 
 - homeRecommendationsState (or)
