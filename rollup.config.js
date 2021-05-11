@@ -1,9 +1,13 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import esbuild from 'rollup-plugin-esbuild';
+/**
+ * @typedef { import("rollup").RollupOptions } RollupOptions
+ */
 
 const plugins = [resolve(), commonjs(), esbuild()];
 
+/** @type {RollupOptions} */
 const content = {
   input: './src/interventions/youtube/content.ts',
   output: {
@@ -13,6 +17,7 @@ const content = {
   plugins: [...plugins],
 };
 
+/** @type {RollupOptions} */
 const utils = {
   input: './src/utils.ts',
   output: {
