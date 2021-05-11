@@ -1,27 +1,19 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import { defaultYouTubeConfig } from '../interventions/youtube/defaults';
 import { youtubeSettings } from '../interventions/youtube/types';
 
-const defaultYouTubeConfig: youtubeSettings = {
-  homeRecommendationsState: 'limited',
-  homeRecommendationsLimitedShowNum: 2,
-  hideHomeFeedFilterBar: true,
-  previewsState: 'hidden',
-  hideExploreTabSidebar: true,
-  grayNotificationCount: true,
-  hideCommentsSection: true,
-  hideMetrics: true, // not implemented template
-  hideMetricsOptions: {
-    // not implemented template
-    viewCount: true,
-    likesAndDislikes: true,
-    subscribersCount: true,
-  },
-  hideRecommendedSidePanelVideo: true,
-  hideRecommendationsBottomVideo: true,
-  hideEndingVideoCards: true,
-  hideEndingVideoRecommendedGrid: true,
+function setItem() {
+  console.log('OK');
+}
+
+function onError(error) {
+  console.error(error);
+}
+
+const storeYoutubeConfig = (config: youtubeSettings) => {
+  browser.storage.sync.set({ youtubeConfig: config }).then(setItem, onError);
 };
 
 @customElement('youtube-options')
@@ -31,18 +23,41 @@ export class YoutubeOptions extends LitElement {
   }
 
   @property({ type: Object })
-  userYouTubeConfig = { ...defaultYouTubeConfig };
+  userYouTubeConfig = {};
+
+  constructor() {
+    super();
+    // browser.storage.sync.clear();
+    const onStoragedState = (state) => {
+      console.log('GOT', state);
+      this.userYouTubeConfig = {
+        ...defaultYouTubeConfig,
+        ...state.youtubeConfig,
+      };
+    };
+
+    const onErrorStoragedState = (error) => {
+      console.log('ERR', error);
+      this.userYouTubeConfig = { ...defaultYouTubeConfig };
+    };
+
+    browser.storage.sync
+      .get('youtubeConfig')
+      .then(onStoragedState, onErrorStoragedState);
+  }
 
   onInputChange = (e) => {
     if (e.target.type === 'checkbox') {
       const property = e.target.id;
       const value: boolean = e.target.checked;
       this.userYouTubeConfig = { ...this.userYouTubeConfig, [property]: value };
+      storeYoutubeConfig(this.userYouTubeConfig);
     }
     if (e.target.type === 'radio') {
       const property = e.target.name;
       const value: boolean = e.target.dataset.value;
       this.userYouTubeConfig = { ...this.userYouTubeConfig, [property]: value };
+      storeYoutubeConfig(this.userYouTubeConfig);
     }
   };
 

@@ -1,30 +1,25 @@
 /* global patchOrAddPatchCSS */
 
-import { browser } from 'webextension-polyfill-ts';
+// import { browser } from 'webextension-polyfill-ts';
 
+import { defaultYouTubeConfig } from './defaults';
 import { youtubeSettings } from './types';
 
-const debug = true;
+let config = { ...defaultYouTubeConfig };
 
-const config: youtubeSettings = {
-  homeRecommendationsState: 'limited',
-  homeRecommendationsLimitedShowNum: 2,
-  hideHomeFeedFilterBar: true,
-  previewsState: 'hidden',
-  hideExploreTabSidebar: true,
-  grayNotificationCount: true,
-  hideCommentsSection: true,
-  hideMetrics: true,
-  hideMetricsOptions: {
-    viewCount: true,
-    likesAndDislikes: true,
-    subscribersCount: true,
-  },
-  hideRecommendedSidePanelVideo: true,
-  hideRecommendationsBottomVideo: true,
-  hideEndingVideoCards: true,
-  hideEndingVideoRecommendedGrid: true,
-};
+function gotKitten(state) {
+  config = { ...defaultYouTubeConfig, ...state.youtubeConfig };
+  setup({ youtubeIsActive: true });
+  docEl.dataset.attentionActive = 'true';
+}
+function onError(error) {
+  console.log(error);
+}
+
+// browser.storage.sync.set({ kitten, monster }).then(setItem, onError);
+browser.storage.sync.get('youtubeConfig').then(gotKitten, onError);
+
+const debug = true;
 
 const docEl = document.documentElement;
 
@@ -76,15 +71,15 @@ function setDataAttrsObj(configObj: youtubeSettings) {
   });
 }
 
-browser.runtime.onMessage.addListener((message) => {
-  if (message.command === 'activate') {
-    console.log('activating');
-    docEl.dataset.attentionActive = 'true';
-  } else if (message.command === 'deactivate') {
-    console.log('deactivating');
-    delete docEl.dataset.attentionActive;
-  }
-});
+// browser.runtime.onMessage.addListener((message) => {
+//   if (message.command === 'activate') {
+//     console.log('activating');
+//     docEl.dataset.attentionActive = 'true';
+//   } else if (message.command === 'deactivate') {
+//     console.log('deactivating');
+//     delete docEl.dataset.attentionActive;
+//   }
+// });
 
 function setup(state) {
   if (state.youtubeIsActive) {
@@ -98,9 +93,4 @@ function setup(state) {
   }
 }
 
-// browser.storage.local.get('youtubeIsActive').then(setup);
-
-if (debug) {
-  setup({ youtubeIsActive: true });
-  docEl.dataset.attentionActive = 'true';
-}
+// browser.storage.sync.get('youtubeIsActive').then(setup);
