@@ -7,7 +7,7 @@ import { youtubeSettings } from './types';
 
 let config = { ...defaultYouTubeConfig };
 
-function gotKitten(state) {
+function gotState(state) {
   config = { ...defaultYouTubeConfig, ...state.youtubeConfig };
   setup({ youtubeIsActive: true });
   docEl.dataset.attentionActive = 'true';
@@ -17,9 +17,7 @@ function onError(error) {
 }
 
 // browser.storage.sync.set({ kitten, monster }).then(setItem, onError);
-browser.storage.sync.get('youtubeConfig').then(gotKitten, onError);
-
-const debug = true;
+browser.storage.sync.get('youtubeConfig').then(gotState, onError);
 
 const docEl = document.documentElement;
 

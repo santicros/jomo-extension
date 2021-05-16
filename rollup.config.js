@@ -1,5 +1,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
+import copy from 'rollup-plugin-copy';
 import esbuild from 'rollup-plugin-esbuild';
 /**
  * @typedef { import("rollup").RollupOptions } RollupOptions
@@ -14,7 +15,17 @@ const content = {
     file: 'dist/interventions/youtube/content.js',
     format: 'iife',
   },
-  plugins: [...plugins],
+  plugins: [
+    ...plugins,
+    copy({
+      targets: [
+        {
+          src: ['./src/interventions/youtube/content.css'],
+          dest: 'dist/interventions/youtube',
+        },
+      ],
+    }),
+  ],
 };
 
 /** @type {RollupOptions} */

@@ -2,7 +2,7 @@ import { youtubeSettings } from './types';
 
 export const defaultYouTubeConfig: youtubeSettings = {
   homeRecommendationsState: 'limited',
-  homeRecommendationsLimitedShowNum: 2,
+  homeRecommendationsLimitedShowNum: 4,
   hideHomeFeedFilterBar: true,
   previewsState: 'hidden',
   hideExploreTabSidebar: true,
