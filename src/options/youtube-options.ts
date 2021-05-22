@@ -12,9 +12,9 @@ function onError(error) {
   console.error(error);
 }
 
-const storeYoutubeConfig = (config: youtubeSettings) => {
-  browser.storage.sync.set({ youtubeConfig: config }).then(setItem, onError);
-};
+// const storeYoutubeConfig = (config: youtubeSettings) => {
+//   browser.storage.sync.set({ youtubeConfig: config }).then(setItem, onError);
+// };
 
 @customElement('youtube-options')
 export class YoutubeOptions extends LitElement {
@@ -41,9 +41,9 @@ export class YoutubeOptions extends LitElement {
       this.userYouTubeConfig = { ...defaultYouTubeConfig };
     };
 
-    browser.storage.sync
-      .get('youtubeConfig')
-      .then(onStoragedState, onErrorStoragedState);
+    // browser.storage.sync
+    //   .get('youtubeConfig')
+    //   .then(onStoragedState, onErrorStoragedState);
   }
 
   onInputChange = (e) => {
@@ -51,13 +51,13 @@ export class YoutubeOptions extends LitElement {
       const property = e.target.id;
       const value: boolean = e.target.checked;
       this.userYouTubeConfig = { ...this.userYouTubeConfig, [property]: value };
-      storeYoutubeConfig(this.userYouTubeConfig);
+      // storeYoutubeConfig(this.userYouTubeConfig);
     }
     if (e.target.type === 'radio') {
       const property = e.target.name;
       const value: boolean = e.target.dataset.value;
       this.userYouTubeConfig = { ...this.userYouTubeConfig, [property]: value };
-      storeYoutubeConfig(this.userYouTubeConfig);
+      // storeYoutubeConfig(this.userYouTubeConfig);
     }
   };
 
@@ -70,14 +70,16 @@ export class YoutubeOptions extends LitElement {
     label: string;
     defaultValue: boolean;
   }) => html`
-    <input
-      type="checkbox"
-      name=${name}
-      id=${name}
-      @change=${this.onInputChange}
-      ?checked=${defaultValue}
-    />
-    <label for=${name}>${label}</label>
+    <div class="flex">
+      <label for=${name} class="flex-grow py-2">${label}</label>
+      <input
+        type="checkbox"
+        name=${name}
+        id=${name}
+        @change=${this.onInputChange}
+        ?checked=${defaultValue}
+      />
+    </div>
   `;
 
   radioTmpl = ({
@@ -88,16 +90,19 @@ export class YoutubeOptions extends LitElement {
   }: {
     groupName: string;
     groupLabel: string;
-    options: { name: string; label: string }[];
+    options: { name: string; label: string; description?: string }[];
     defaultValue: string;
   }) => html`
-    <fieldset>
+    <fieldset class="grid gap-2">
       <legend>
-        <h2>${groupLabel}</h2>
+        <h3>${groupLabel}</h3>
+        <p>Descriptive text</p>
       </legend>
       ${options.map(
         (option) =>
-          html`<input
+          html`<div class="block relative">
+            <input
+              class="absolute top-1/2 left-3 transform -translate-y-1/2 z-10"
               type="radio"
               id=${groupName + '_' + option.name}
               name=${groupName}
@@ -105,8 +110,16 @@ export class YoutubeOptions extends LitElement {
               @change=${this.onInputChange}
               ?checked=${option.name === defaultValue}
             />
-            <label for=${groupName + '_' + option.name}>${option.label}</label>
-            <br />`
+            <label
+              for=${groupName + '_' + option.name}
+              class="block p-2 pl-9 rounded"
+            >
+              <span>${option.label}</span>
+              ${option.description
+                ? html`<p class="text-sm">${option.description}</p>`
+                : null}
+            </label>
+          </div>`
       )}
     </fieldset>
   `;
@@ -128,7 +141,7 @@ export class YoutubeOptions extends LitElement {
       </li>
       <li>
         ${this.userYouTubeConfig.homeRecommendationsState === 'limited'
-          ? html` <p>Limited number</p>`
+          ? html`<p>Limited number</p>`
           : null}
       </li>
       <li>
@@ -136,7 +149,11 @@ export class YoutubeOptions extends LitElement {
           groupName: 'previewsState',
           groupLabel: 'Previews State',
           options: [
-            { name: 'hidden', label: 'Hidden' },
+            {
+              name: 'hidden',
+              label: 'Hidden',
+              description: 'This is an option description',
+            },
             { name: 'hoverImg', label: 'Hover Img' },
             { name: 'hoverVideo', label: 'Hover Video' },
             { name: 'visible', label: 'Visible' },

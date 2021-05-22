@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @supports (font-variation-settings: normal) {
   html {
     font-family: 'Inter var', sans-serif;
@@ -19,16 +23,4 @@
   font-style: italic;
   font-named-instance: 'Italic';
   src: url('./assets/Inter-italic.var.woff2?v=3.18') format('woff2');
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
 }

@@ -12,7 +12,6 @@
   - youtube
   - twitter
 
-
 Sections:
 
 - Recommendations

@@ -1,5 +1,6 @@
+import '../global.css';
+import './style.css';
 import './youtube-options';
-
 // import { html, render } from 'lit';
 
 // import { browser } from 'webextension-polyfill-ts';

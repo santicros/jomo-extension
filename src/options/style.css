@@ -1,12 +1,7 @@
-:root {
-  --black: black;
-}
-
 body {
   max-width: 80ch;
   padding: 2rem 2rem;
   margin: 0 auto;
-  color: var(--black);
 }
 
 h1 {
@@ -22,4 +17,21 @@ section h1 {
 section h2 {
   font-size: 1.4rem;
   font-weight: 800;
+}
+section h3 {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+input[type='radio'] + label {
+  background: rgb(242, 243, 245);
+}
+
+input[type='radio']:checked + label {
+  background: rgb(224, 226, 229);
+}
+
+input[type='radio'] + label:hover {
+  filter: brightness(1.02);
 }
