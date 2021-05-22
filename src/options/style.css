@@ -1,5 +1,5 @@
-body {
-  max-width: 80ch;
+.wrapper {
+  max-width: 40rem;
   padding: 2rem 2rem;
   margin: 0 auto;
 }
@@ -34,4 +34,8 @@ input[type='radio']:checked + label {
 
 input[type='radio'] + label:hover {
   filter: brightness(1.02);
+}
+
+input[type='checkbox'] + label:hover {
+  color: rgb(100, 100, 100);
 }

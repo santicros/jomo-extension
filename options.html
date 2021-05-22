@@ -5,10 +5,15 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings | JOMO</title>
+    <meta
+      name="description"
+      content="Configure your settings for the JOMO extension."
+    />
   </head>
   <body>
     <script type="module" src="./src/options/main.ts"></script>
-    <header>
+    <div class="wrapper">
+      <!-- <header>
       <nav>
         <ul>
           <li>Item 1</li>
@@ -16,51 +21,52 @@
           <li>Item 3</li>
         </ul>
       </nav>
-    </header>
-    <main>
-      <h1 class="text-4xl">Settings</h1>
-      <section>
-        <h1>General</h1>
-        <ul>
-          <li>
-            <fieldset>
-              <legend>
-                <h2>Mode</h2>
-              </legend>
-              <div>
-                <input type="radio" id="flexible" name="mode" />
-                <label for="flexible">Flexible</label>
-              </div>
+    </header> -->
+      <main>
+        <h1 class="text-4xl">Settings</h1>
+        <section>
+          <h1>General</h1>
+          <ul>
+            <li>
+              <fieldset>
+                <legend>
+                  <h2>Mode</h2>
+                </legend>
+                <div>
+                  <input type="radio" id="flexible" name="mode" />
+                  <label for="flexible">Flexible</label>
+                </div>
 
-              <div>
-                <input type="radio" id="medium" name="mode" />
-                <label for="medium">Medium</label>
-              </div>
-              <div>
-                <input type="radio" id="strict" name="mode" />
-                <label for="strict">Strict</label>
-              </div>
-              <div>
-                <input type="radio" id="custom" name="mode" />
-                <label for="custom">Custom</label>
-              </div>
-            </fieldset>
-          </li>
-        </ul>
-      </section>
-      <section>
-        <h1>Webpages</h1>
-        <ul>
-          <li>
-            <h2>YouTube</h2>
-            <ul id="youtubeOptions">
-              <youtube-options></youtube-options>
-            </ul>
-          </li>
-        </ul>
-      </section>
-      <section>Test</section>
-    </main>
-    <footer></footer>
+                <div>
+                  <input type="radio" id="medium" name="mode" />
+                  <label for="medium">Medium</label>
+                </div>
+                <div>
+                  <input type="radio" id="strict" name="mode" />
+                  <label for="strict">Strict</label>
+                </div>
+                <div>
+                  <input type="radio" id="custom" name="mode" />
+                  <label for="custom">Custom</label>
+                </div>
+              </fieldset>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h1>Webpages</h1>
+          <ul>
+            <li>
+              <h2>YouTube</h2>
+              <ul id="youtubeOptions">
+                <youtube-options></youtube-options>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section>Test</section>
+      </main>
+      <footer></footer>
+    </div>
   </body>
 </html>

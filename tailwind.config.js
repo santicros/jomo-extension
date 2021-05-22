@@ -2,11 +2,11 @@ module.exports = {
   mode: 'jit',
   purge: [
     './options.html',
-    './src/options/*.{js,ts}',
-    './popup.html',
-    './src/popup/*.{js,ts}',
+    './src/options/**/*.{js,ts}',
+    // './popup.html',
+    // './src/popup/**/*.{js,ts}',
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false,
   theme: {
     extend: {},
   },
