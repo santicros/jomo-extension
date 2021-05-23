@@ -14,29 +14,27 @@ export class CheckboxItem extends LitElement {
   @property({ type: String })
   itemLabel: string | undefined;
 
-  @property({ type: Boolean })
-  defaultValue: boolean | undefined;
+  @property({ type: String })
+  itemDescription: string | undefined;
 
-  onInputChange = (e: { target: HTMLInputElement }) => {
-    const property = e.target.id;
-    const value = e.target.checked;
-    console.log('property:', property);
-    console.log('value', value);
-  };
+  @property({ type: Boolean })
+  itemDefault: boolean | undefined;
 
   render() {
-    return html`<div class="flex items-center">
+    return html`<div class="flex items-center border-b">
       <input
-        class="order-2"
+        class="order-2 flex-shrink-0"
         type="checkbox"
         name=${ifDefined(this.itemName)}
         id=${ifDefined(this.itemName)}
-        @change=${this.onInputChange}
-        ?checked=${this.defaultValue}
+        ?checked=${this.itemDefault}
       />
-      <label for=${ifDefined(this.itemName)} class="flex-grow py-2"
-        >${this.itemLabel}</label
-      >
+      <label for=${ifDefined(this.itemName)} class="flex-grow py-5 mr-4">
+        <span>${this.itemLabel}</span>
+        ${this.itemDescription
+          ? html`<p class="text-sm opacity-60">${this.itemDescription}</p>`
+          : null}
+      </label>
     </div>`;
   }
 }

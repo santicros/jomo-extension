@@ -18,17 +18,7 @@ export class RadioGroup extends LitElement {
   groupName: string | undefined;
 
   @property({ type: String })
-  defaultValue: string | undefined;
-
-  onInputChange = (e: {
-    target: HTMLInputElement;
-    dataset?: { value: string };
-  }) => {
-    const property = e.target.name;
-    const value = e.target?.dataset?.value;
-    console.log('property:', property);
-    console.log('value', value);
-  };
+  groupDefault: string | undefined;
 
   render() {
     return html`<fieldset>
@@ -36,7 +26,7 @@ export class RadioGroup extends LitElement {
         <h3>${this.groupLabel}</h3>
         <p>Descriptive text</p>
       </legend>
-      ${this.options &&
+      ${this.options?.length &&
       html`
         <div class="grid gap-2">
           ${this.options.map(
@@ -48,8 +38,7 @@ export class RadioGroup extends LitElement {
                   id=${this.groupName + '_' + option.name}
                   name=${ifDefined(this.groupName)}
                   data-value=${option.name}
-                  @change=${this.onInputChange}
-                  ?checked=${option.name === this.defaultValue}
+                  ?checked=${option.name === this.groupDefault}
                 />
                 <label
                   for=${this.groupName + '_' + option.name}
@@ -57,7 +46,9 @@ export class RadioGroup extends LitElement {
                 >
                   <span>${option.label}</span>
                   ${option.description
-                    ? html`<p class="text-sm">${option.description}</p>`
+                    ? html`<p class="text-sm opacity-60">
+                        ${option.description}
+                      </p>`
                     : null}
                 </label>
               </div>`

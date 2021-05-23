@@ -37,5 +37,5 @@ input[type='radio'] + label:hover {
 }
 
 input[type='checkbox'] + label:hover {
-  color: rgb(100, 100, 100);
+  color: rgb(80, 80, 80);
 }
