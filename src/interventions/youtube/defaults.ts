@@ -1,22 +1,24 @@
 import { youtubeSettings } from './types';
 
 export const defaultYouTubeConfig: youtubeSettings = {
-  homeRecommendationsState: 'limited',
-  homeRecommendationsLimitedShowNum: 4,
+  profileRecommendations: 'hidden',
+  profilelMetrics: 'visible',
+  profileDistractingElements: 'hidden',
+
+  recommendationsHomeState: 'limited',
+  recommendationsHomeLimitedNum: 4,
+  hideRecommendedSidePanelVideo: true,
+  hideRecommendationsBottomVideo: true,
+  hideEndingVideoCards: true,
+  hideEndingVideoRecommendedGrid: true,
+
+  metricsHideViewCount: true,
+  metricsHideLikesDislikes: true,
+  metricsHideSubscribersCount: true,
+
   hideHomeFeedFilterBar: true,
   previewsState: 'hidden',
   hideExploreTabSidebar: true,
   grayNotificationCount: true,
   hideCommentsSection: true,
-  hideMetrics: true, // not implemented template
-  hideMetricsOptions: {
-    // not implemented template
-    viewCount: true,
-    likesAndDislikes: true,
-    subscribersCount: true,
-  },
-  hideRecommendedSidePanelVideo: true,
-  hideRecommendationsBottomVideo: true,
-  hideEndingVideoCards: true,
-  hideEndingVideoRecommendedGrid: true,
 };

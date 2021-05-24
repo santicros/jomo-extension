@@ -21,14 +21,14 @@ export class RadioGroup extends LitElement {
   groupValue: string | undefined;
 
   render() {
-    return html`<fieldset>
+    return html`<fieldset class="mt-4">
       <legend>
         <h3>${this.groupLabel}</h3>
-        <p>Descriptive text</p>
+        <p class="text-sm">Descriptive text</p>
       </legend>
       ${this.options?.length &&
       html`
-        <div class="grid gap-2">
+        <div class="grid gap-2 mt-2">
           ${this.options.map(
             (option) =>
               html`<div class="block relative">

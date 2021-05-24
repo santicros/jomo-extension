@@ -17,10 +17,16 @@ const getChangedValue = (target: HTMLInputElement) => {
   if (target.type !== 'checkbox' && target.type !== 'radio') return;
 
   if (target.type === 'checkbox') {
-    return { property: target.id, value: target.checked };
+    return {
+      property: target.id,
+      value: target.checked,
+    };
   }
   if (target.type === 'radio') {
-    return { property: target.name, value: target.dataset.value };
+    return {
+      property: target.name,
+      value: target.dataset.value,
+    };
   }
 };
 
@@ -44,10 +50,16 @@ const machineModel = createModel(
 const updateConfig = machineModel.assign({
   userYouTubeConfig: (context, event) => {
     assertEventType(event, 'UPDATE_CONFIG');
-    return {
+
+    const newObj = {
       ...context.userYouTubeConfig,
       [event.changed.property]: event.changed.value,
     };
+
+    console.log('NEW OBJ', newObj);
+    console.log('UPDATE CONFIG', event.changed);
+
+    return newObj;
   },
 });
 
@@ -139,11 +151,7 @@ export class YoutubeOptions extends LitElement {
     return this.service.state.context.userYouTubeConfig;
   }
 
-  onInputChange = (e: {
-    target: HTMLInputElement;
-    dataset: { value?: string };
-    value: boolean | string;
-  }) => {
+  onInputChange = (e: { target: HTMLInputElement }) => {
     const changed = getChangedValue(e.target);
     if (!changed || changed.property == null || changed.value == null) return;
     this.service.send('UPDATE_CONFIG', { changed });
@@ -152,99 +160,166 @@ export class YoutubeOptions extends LitElement {
   render() {
     return html`
       <div @change=${this.onInputChange}>
-        <li>
+        <section>
+          <h1>Recommendations</h1>
           <radio-group
-            groupName="homeRecommendationsState"
-            groupLabel="Home Recommendations State"
+            groupName="profileRecommendations"
+            groupLabel="Recommendations"
             .options=${[
-              { name: 'hidden', label: 'Hidden' },
+              { name: 'visible', label: 'Visible' },
               { name: 'limited', label: 'Limited' },
-              { name: 'visible', label: 'Visible' },
+              { name: 'hidden', label: 'Hidden' },
+              { name: 'custom', label: 'Custom' },
             ]}
-            .groupValue=${this.userYouTubeConfig.homeRecommendationsState}
+            .groupValue=${this.userYouTubeConfig.profileRecommendations}
           ></radio-group>
-        </li>
-        <li>
-          ${this.userYouTubeConfig.homeRecommendationsState === 'limited'
-            ? html`<p>Limited number</p>`
+
+          ${this.userYouTubeConfig.profileRecommendations === 'custom'
+            ? html`<p>Advanced Settings Recommendations</p>
+                <radio-group
+                  groupName="recommendationsHomeState"
+                  groupLabel="Home Recommendations State"
+                  .options=${[
+                    { name: 'visible', label: 'Visible' },
+                    { name: 'limited', label: 'Limited' },
+                    { name: 'hidden', label: 'Hidden' },
+                  ]}
+                  .groupValue=${this.userYouTubeConfig.recommendationsHomeState}
+                ></radio-group>
+                ${this.userYouTubeConfig.recommendationsHomeState === 'limited'
+                  ? html`<label for="recommendationsHomeLimitedNum"
+                        >Limited number
+                      </label>
+                      <input
+                        type="number"
+                        placeholder="10"
+                        id="recommendationsHomeLimitedNum"
+                      />`
+                  : null}
+
+                <checkbox-item
+                  itemName="hideRecommendedSidePanelVideo"
+                  itemLabel="hideRecommendedSidePanelVideo"
+                  .itemValue=${this.userYouTubeConfig
+                    .hideRecommendedSidePanelVideo}
+                ></checkbox-item>
+
+                <checkbox-item
+                  itemName="hideRecommendationsBottomVideo"
+                  itemLabel="hideRecommendationsBottomVideo"
+                  itemDescription="Praesent eleifend ullamcorper massa, eu scelerisque lectus placerat a. Etiam sapien mauris, dictum in justo id, blandit rutrum metus."
+                  .itemValue=${this.userYouTubeConfig
+                    .hideRecommendationsBottomVideo}
+                ></checkbox-item>
+
+                <checkbox-item
+                  itemName="hideEndingVideoCards"
+                  itemLabel="hideEndingVideoCards"
+                  .itemValue=${this.userYouTubeConfig.hideEndingVideoCards}
+                ></checkbox-item>
+
+                <checkbox-item
+                  itemName="hideEndingVideoRecommendedGrid"
+                  itemLabel="hideEndingVideoRecommendedGrid"
+                  .itemValue=${this.userYouTubeConfig
+                    .hideEndingVideoRecommendedGrid}
+                ></checkbox-item>`
             : null}
-        </li>
-        <li>
+        </section>
+
+        <section>
+          <h1>Metrics</h1>
           <radio-group
-            groupName="previewsState"
-            groupLabel="Previews State"
+            groupName="profilelMetrics"
+            groupLabel="Metrics"
             .options=${[
-              {
-                name: 'hidden',
-                label: 'Hidden',
-                description: 'This is an option description',
-              },
-              { name: 'hoverImg', label: 'Hover Img' },
-              { name: 'hoverVideo', label: 'Hover Video' },
               { name: 'visible', label: 'Visible' },
+              { name: 'hidden', label: 'Hidden' },
+              { name: 'custom', label: 'Custom' },
             ]}
-            .groupValue=${this.userYouTubeConfig.previewsState}
+            .groupValue=${this.userYouTubeConfig.profilelMetrics}
           ></radio-group>
-        </li>
-        <li>
-          <checkbox-item
-            itemName="hideHomeFeedFilterBar"
-            itemLabel="Hide Home Feed FilterBar"
-            itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed nunc nec felis imperdiet fermentum. Donec at turpis ac risus aliquet auctor. Pellentesque mollis fermentum lacus, sed auctor libero elementum et. "
-            .itemValue=${this.userYouTubeConfig.hideHomeFeedFilterBar}
-          ></checkbox-item>
-        </li>
-        <li>
-          <checkbox-item
-            itemName="hideExploreTabSidebar"
-            itemLabel="Hide Explore Tab Sidebar"
-            .itemValue=${this.userYouTubeConfig.hideExploreTabSidebar}
-          ></checkbox-item>
-        </li>
-        <li>
-          <checkbox-item
-            itemName="grayNotificationCount"
-            itemLabel="Gray Notification Count"
-            itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-            .itemValue=${this.userYouTubeConfig.grayNotificationCount}
-          ></checkbox-item>
-        </li>
-        <li>
-          <checkbox-item
-            itemName="hideCommentsSection"
-            itemLabel="Hide Comments Section"
-            .itemValue=${this.userYouTubeConfig.hideCommentsSection}
-          ></checkbox-item>
-        </li>
-        <li>
-          <checkbox-item
-            itemName="hideRecommendedSidePanelVideo"
-            itemLabel="hideRecommendedSidePanelVideo"
-            .itemValue=${this.userYouTubeConfig.hideRecommendedSidePanelVideo}
-          ></checkbox-item>
-        </li>
-        <li>
-          <checkbox-item
-            itemName="hideRecommendationsBottomVideo"
-            itemLabel="hideRecommendationsBottomVideo"
-            itemDescription="Praesent eleifend ullamcorper massa, eu scelerisque lectus placerat a. Etiam sapien mauris, dictum in justo id, blandit rutrum metus."
-            .itemValue=${this.userYouTubeConfig.hideRecommendationsBottomVideo}
-          ></checkbox-item>
-        </li>
-        <li>
-          <checkbox-item
-            itemName="hideEndingVideoCards"
-            itemLabel="hideEndingVideoCards"
-            .itemValue=${this.userYouTubeConfig.hideEndingVideoCards}
-          ></checkbox-item>
-        </li>
-        <li>
-          <checkbox-item
-            itemName="hideEndingVideoRecommendedGrid"
-            itemLabel="hideEndingVideoRecommendedGrid"
-            .itemValue=${this.userYouTubeConfig.hideEndingVideoRecommendedGrid}
-          ></checkbox-item>
-        </li>
+
+          ${this.userYouTubeConfig.profilelMetrics === 'custom'
+            ? html`<p>Advanced Settings metrics</p>
+                <checkbox-item
+                  itemName="metricsHideViewCount"
+                  itemLabel="metricsHideViewCount"
+                  .itemValue=${this.userYouTubeConfig.metricsHideViewCount}
+                ></checkbox-item>
+                <checkbox-item
+                  itemName="metricsHideLikesDislikes"
+                  itemLabel="metricsHideLikesDislikes"
+                  .itemValue=${this.userYouTubeConfig.metricsHideLikesDislikes}
+                ></checkbox-item>
+                <checkbox-item
+                  itemName="metricsHideSubscribersCount"
+                  itemLabel="metricsHideSubscribersCount"
+                  .itemValue=${this.userYouTubeConfig
+                    .metricsHideSubscribersCount}
+                ></checkbox-item>`
+            : null}
+        </section>
+
+        <section>
+          <h1>Distracting Elements</h1>
+          <radio-group
+            groupName="profileDistractingElements"
+            groupLabel="Distracting Elements"
+            .options=${[
+              { name: 'visible', label: 'Visible' },
+              { name: 'limited', label: 'Limited' },
+              { name: 'hidden', label: 'Hidden' },
+              { name: 'custom', label: 'Custom' },
+            ]}
+            .groupValue=${this.userYouTubeConfig.profileDistractingElements}
+          ></radio-group>
+
+          ${this.userYouTubeConfig.profileDistractingElements === 'custom'
+            ? html`<p>Advanced Settings distractingElements</p>
+                <radio-group
+                  groupName="previewsState"
+                  groupLabel="Previews State"
+                  .options=${[
+                    { name: 'visible', label: 'Visible' },
+                    { name: 'hoverVideo', label: 'Hover Video' },
+                    { name: 'hoverImg', label: 'Hover Img' },
+                    {
+                      name: 'hidden',
+                      label: 'Hidden',
+                      description: 'This is an option description',
+                    },
+                  ]}
+                  .groupValue=${this.userYouTubeConfig.previewsState}
+                ></radio-group>
+
+                <checkbox-item
+                  itemName="hideHomeFeedFilterBar"
+                  itemLabel="Hide Home Feed FilterBar"
+                  itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed nunc nec felis imperdiet fermentum. Donec at turpis ac risus aliquet auctor. Pellentesque mollis fermentum lacus, sed auctor libero elementum et. "
+                  .itemValue=${this.userYouTubeConfig.hideHomeFeedFilterBar}
+                ></checkbox-item>
+
+                <checkbox-item
+                  itemName="hideExploreTabSidebar"
+                  itemLabel="Hide Explore Tab Sidebar"
+                  .itemValue=${this.userYouTubeConfig.hideExploreTabSidebar}
+                ></checkbox-item>
+
+                <checkbox-item
+                  itemName="grayNotificationCount"
+                  itemLabel="Gray Notification Count"
+                  itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                  .itemValue=${this.userYouTubeConfig.grayNotificationCount}
+                ></checkbox-item>
+
+                <checkbox-item
+                  itemName="hideCommentsSection"
+                  itemLabel="Hide Comments Section"
+                  .itemValue=${this.userYouTubeConfig.hideCommentsSection}
+                ></checkbox-item> `
+            : null}
+        </section>
       </div>
     `;
   }

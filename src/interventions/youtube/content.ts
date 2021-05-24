@@ -7,8 +7,8 @@ import { youtubeSettings } from './types';
 
 let config = { ...defaultYouTubeConfig };
 
-function gotState(state) {
-  config = { ...defaultYouTubeConfig, ...state.youtubeConfig };
+function gotState(storage: { youtubeConfig: youtubeSettings }) {
+  config = { ...defaultYouTubeConfig, ...storage.youtubeConfig };
   setup({ youtubeIsActive: true });
   docEl.dataset.attentionActive = 'true';
 }
@@ -46,8 +46,8 @@ function startBeforeDOMLoaded() {
  * Main executed after DOM loaded
  */
 function startOnDOMLoaded() {
-  if (config.homeRecommendationsState === 'limited') {
-    dynamicLimitHomeRecommendations(config.homeRecommendationsLimitedShowNum);
+  if (config.recommendationsHomeState === 'limited') {
+    dynamicLimitHomeRecommendations(config.recommendationsHomeLimitedNum);
   }
 }
 
