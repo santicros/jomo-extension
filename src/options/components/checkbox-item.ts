@@ -18,7 +18,7 @@ export class CheckboxItem extends LitElement {
   itemDescription: string | undefined;
 
   @property({ type: Boolean })
-  itemDefault: boolean | undefined;
+  itemValue: boolean | undefined;
 
   render() {
     return html`<div class="flex items-center border-b">
@@ -27,7 +27,7 @@ export class CheckboxItem extends LitElement {
         type="checkbox"
         name=${ifDefined(this.itemName)}
         id=${ifDefined(this.itemName)}
-        ?checked=${this.itemDefault}
+        ?checked=${this.itemValue}
       />
       <label for=${ifDefined(this.itemName)} class="flex-grow py-5 mr-4">
         <span>${this.itemLabel}</span>

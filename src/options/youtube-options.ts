@@ -2,18 +2,16 @@ import './components/radio-group';
 import './components/checkbox-item';
 
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { createMachine, interpret } from 'xstate';
+import { createModel } from 'xstate/lib/model';
 
 import { defaultYouTubeConfig } from '../interventions/youtube/defaults';
-import { youtubeSettings } from '../interventions/youtube/types';
+import { assertEventType, fetchStorageConfig, setStorageConfig } from './utils';
 
-const fetchStorageConfig = (id: string) => browser.storage.sync.get(id);
+const isProd = import.meta.env.PROD;
 
-const setStorageConfig = (id: string, config: youtubeSettings) =>
-  browser.storage.sync.set({ [id]: config });
-
-const clearStorageConfig = () => browser.storage.sync.clear();
+const youtubeStorageKey = 'youtubeConfig';
 
 const getChangedValue = (target: HTMLInputElement) => {
   if (target.type !== 'checkbox' && target.type !== 'radio') return;
@@ -26,9 +24,37 @@ const getChangedValue = (target: HTMLInputElement) => {
   }
 };
 
-const machine = createMachine(
+const machineModel = createModel(
+  {
+    userYouTubeConfig: { ...defaultYouTubeConfig },
+  },
+  {
+    events: {
+      GET_CONFIG: (value: string) => ({ value }),
+      UPDATE_CONFIG: (changed: {
+        property: string;
+        value: string | boolean;
+      }) => ({
+        changed,
+      }),
+    },
+  }
+);
+
+const updateConfig = machineModel.assign({
+  userYouTubeConfig: (context, event) => {
+    assertEventType(event, 'UPDATE_CONFIG');
+    return {
+      ...context.userYouTubeConfig,
+      [event.changed.property]: event.changed.value,
+    };
+  },
+});
+
+const machine = createMachine<typeof machineModel>(
   {
     id: 'youtubeSettingsMachine',
+    context: machineModel.initialContext,
     initial: 'idle',
     states: {
       idle: {
@@ -40,11 +66,19 @@ const machine = createMachine(
           src: 'fetchStorageConfig',
           onDone: {
             target: 'loaded',
-            actions: () => console.log('DONE'),
+            actions: (context, event) => {
+              // const onStoragedState = (state) => {
+              //   this.userYouTubeConfig = {
+              //     ...defaultYouTubeConfig,
+              //     ...state.youtubeConfig,
+              //   };
+              // };
+              console.log('DONE', event.data);
+            },
           },
           onError: {
             target: 'loaded',
-            actions: () => console.log('ERROR'),
+            actions: (context, event) => console.log('ERROR', event.data),
           },
         },
       },
@@ -55,7 +89,7 @@ const machine = createMachine(
   },
   {
     actions: {
-      updateConfig: (context, event) => console.log('UPDATE CONFIG', event),
+      updateConfig: updateConfig,
     },
     services: {
       fetchStorageConfig: async (context, event) => {
@@ -65,8 +99,6 @@ const machine = createMachine(
     },
   }
 );
-
-const youtubeStorageKey = 'youtubeConfig';
 
 const machineWithActions = machine.withConfig({
   actions: {
@@ -78,17 +110,12 @@ const machineWithActions = machine.withConfig({
   },
 });
 
-const isProd = import.meta.env.PROD;
-
 @customElement('youtube-options')
 export class YoutubeOptions extends LitElement {
   protected createRenderRoot() {
     return this;
   }
   readonly service;
-
-  @property({ type: Object })
-  userYouTubeConfig: youtubeSettings = defaultYouTubeConfig;
 
   constructor() {
     super();
@@ -101,22 +128,15 @@ export class YoutubeOptions extends LitElement {
       .start();
 
     this.service.send('GET_CONFIG');
-
-    const onStoragedState = (state) => {
-      this.userYouTubeConfig = {
-        ...defaultYouTubeConfig,
-        ...state.youtubeConfig,
-      };
-    };
-
-    const onErrorStoragedState = (error) => {
-      this.userYouTubeConfig = { ...defaultYouTubeConfig };
-    };
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this.service.stop();
+  }
+
+  get userYouTubeConfig() {
+    return this.service.state.context.userYouTubeConfig;
   }
 
   onInputChange = (e: {
@@ -125,17 +145,13 @@ export class YoutubeOptions extends LitElement {
     value: boolean | string;
   }) => {
     const changed = getChangedValue(e.target);
-
     if (!changed || changed.property == null || changed.value == null) return;
-    this.service.send('UPDATE_CONFIG', changed);
-    // this.userYouTubeConfig = { ...this.userYouTubeConfig, [property]: value };
-    // storeYoutubeConfig(this.userYouTubeConfig);
+    this.service.send('UPDATE_CONFIG', { changed });
   };
 
   render() {
     return html`
       <div @change=${this.onInputChange}>
-        <p>${this.service.state.value}</p>
         <li>
           <radio-group
             groupName="homeRecommendationsState"
@@ -145,7 +161,7 @@ export class YoutubeOptions extends LitElement {
               { name: 'limited', label: 'Limited' },
               { name: 'visible', label: 'Visible' },
             ]}
-            .groupDefault=${this.userYouTubeConfig.homeRecommendationsState}
+            .groupValue=${this.userYouTubeConfig.homeRecommendationsState}
           ></radio-group>
         </li>
         <li>
@@ -167,7 +183,7 @@ export class YoutubeOptions extends LitElement {
               { name: 'hoverVideo', label: 'Hover Video' },
               { name: 'visible', label: 'Visible' },
             ]}
-            .groupDefault=${this.userYouTubeConfig.previewsState}
+            .groupValue=${this.userYouTubeConfig.previewsState}
           ></radio-group>
         </li>
         <li>
@@ -175,14 +191,14 @@ export class YoutubeOptions extends LitElement {
             itemName="hideHomeFeedFilterBar"
             itemLabel="Hide Home Feed FilterBar"
             itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed nunc nec felis imperdiet fermentum. Donec at turpis ac risus aliquet auctor. Pellentesque mollis fermentum lacus, sed auctor libero elementum et. "
-            .itemDefault=${this.userYouTubeConfig.hideHomeFeedFilterBar}
+            .itemValue=${this.userYouTubeConfig.hideHomeFeedFilterBar}
           ></checkbox-item>
         </li>
         <li>
           <checkbox-item
             itemName="hideExploreTabSidebar"
             itemLabel="Hide Explore Tab Sidebar"
-            .itemDefault=${this.userYouTubeConfig.hideExploreTabSidebar}
+            .itemValue=${this.userYouTubeConfig.hideExploreTabSidebar}
           ></checkbox-item>
         </li>
         <li>
@@ -190,21 +206,21 @@ export class YoutubeOptions extends LitElement {
             itemName="grayNotificationCount"
             itemLabel="Gray Notification Count"
             itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-            .itemDefault=${this.userYouTubeConfig.grayNotificationCount}
+            .itemValue=${this.userYouTubeConfig.grayNotificationCount}
           ></checkbox-item>
         </li>
         <li>
           <checkbox-item
             itemName="hideCommentsSection"
             itemLabel="Hide Comments Section"
-            .itemDefault=${this.userYouTubeConfig.hideCommentsSection}
+            .itemValue=${this.userYouTubeConfig.hideCommentsSection}
           ></checkbox-item>
         </li>
         <li>
           <checkbox-item
             itemName="hideRecommendedSidePanelVideo"
             itemLabel="hideRecommendedSidePanelVideo"
-            .itemDefault=${this.userYouTubeConfig.hideRecommendedSidePanelVideo}
+            .itemValue=${this.userYouTubeConfig.hideRecommendedSidePanelVideo}
           ></checkbox-item>
         </li>
         <li>
@@ -212,23 +228,21 @@ export class YoutubeOptions extends LitElement {
             itemName="hideRecommendationsBottomVideo"
             itemLabel="hideRecommendationsBottomVideo"
             itemDescription="Praesent eleifend ullamcorper massa, eu scelerisque lectus placerat a. Etiam sapien mauris, dictum in justo id, blandit rutrum metus."
-            .itemDefault=${this.userYouTubeConfig
-              .hideRecommendationsBottomVideo}
+            .itemValue=${this.userYouTubeConfig.hideRecommendationsBottomVideo}
           ></checkbox-item>
         </li>
         <li>
           <checkbox-item
             itemName="hideEndingVideoCards"
             itemLabel="hideEndingVideoCards"
-            .itemDefault=${this.userYouTubeConfig.hideEndingVideoCards}
+            .itemValue=${this.userYouTubeConfig.hideEndingVideoCards}
           ></checkbox-item>
         </li>
         <li>
           <checkbox-item
             itemName="hideEndingVideoRecommendedGrid"
             itemLabel="hideEndingVideoRecommendedGrid"
-            .itemDefault=${this.userYouTubeConfig
-              .hideEndingVideoRecommendedGrid}
+            .itemValue=${this.userYouTubeConfig.hideEndingVideoRecommendedGrid}
           ></checkbox-item>
         </li>
       </div>

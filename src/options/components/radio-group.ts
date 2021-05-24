@@ -18,7 +18,7 @@ export class RadioGroup extends LitElement {
   groupName: string | undefined;
 
   @property({ type: String })
-  groupDefault: string | undefined;
+  groupValue: string | undefined;
 
   render() {
     return html`<fieldset>
@@ -38,7 +38,7 @@ export class RadioGroup extends LitElement {
                   id=${this.groupName + '_' + option.name}
                   name=${ifDefined(this.groupName)}
                   data-value=${option.name}
-                  ?checked=${option.name === this.groupDefault}
+                  ?checked=${option.name === this.groupValue}
                 />
                 <label
                   for=${this.groupName + '_' + option.name}
