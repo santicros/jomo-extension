@@ -3,7 +3,7 @@ import './components/checkbox-item';
 
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { createMachine, interpret } from 'xstate';
+import { assign, createMachine, interpret } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 
 import { defaultYouTubeConfig } from '../interventions/youtube/defaults';
@@ -32,7 +32,7 @@ const getChangedValue = (target: HTMLInputElement) => {
 
 const machineModel = createModel(
   {
-    userYouTubeConfig: { ...defaultYouTubeConfig },
+    userYouTubeConfig: defaultYouTubeConfig,
   },
   {
     events: {
@@ -78,15 +78,15 @@ const machine = createMachine<typeof machineModel>(
           src: 'fetchStorageConfig',
           onDone: {
             target: 'loaded',
-            actions: (context, event) => {
-              // const onStoragedState = (state) => {
-              //   this.userYouTubeConfig = {
-              //     ...defaultYouTubeConfig,
-              //     ...state.youtubeConfig,
-              //   };
-              // };
-              console.log('DONE', event.data);
-            },
+            actions: assign({
+              userYouTubeConfig: (_, event) => {
+                console.log('EVENT', event);
+                return {
+                  ...defaultYouTubeConfig,
+                  ...event.data[youtubeStorageKey],
+                };
+              },
+            }),
           },
           onError: {
             target: 'loaded',
@@ -95,7 +95,7 @@ const machine = createMachine<typeof machineModel>(
         },
       },
       loaded: {
-        on: { UPDATE_CONFIG: { actions: ['updateConfig'] } },
+        on: { UPDATE_CONFIG: { actions: ['updateConfig', 'setConfig'] } },
       },
     },
   },
@@ -114,8 +114,11 @@ const machine = createMachine<typeof machineModel>(
 
 const machineWithActions = machine.withConfig({
   actions: {
-    updateConfig: (context, event) =>
-      setStorageConfig(youtubeStorageKey, defaultYouTubeConfig),
+    setConfig: (context) =>
+      setStorageConfig(youtubeStorageKey, {
+        ...defaultYouTubeConfig,
+        ...context.userYouTubeConfig,
+      }),
   },
   services: {
     fetchStorageConfig: () => fetchStorageConfig(youtubeStorageKey),
@@ -230,17 +233,17 @@ export class YoutubeOptions extends LitElement {
         <section>
           <h1>Metrics</h1>
           <radio-group
-            groupName="profilelMetrics"
+            groupName="profileMetrics"
             groupLabel="Metrics"
             .options=${[
               { name: 'visible', label: 'Visible' },
               { name: 'hidden', label: 'Hidden' },
               { name: 'custom', label: 'Custom' },
             ]}
-            .groupValue=${this.userYouTubeConfig.profilelMetrics}
+            .groupValue=${this.userYouTubeConfig.profileMetrics}
           ></radio-group>
 
-          ${this.userYouTubeConfig.profilelMetrics === 'custom'
+          ${this.userYouTubeConfig.profileMetrics === 'custom'
             ? html`<p>Advanced Settings metrics</p>
                 <checkbox-item
                   itemName="metricsHideViewCount"

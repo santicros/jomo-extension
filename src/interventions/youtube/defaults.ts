@@ -1,8 +1,31 @@
 import { youtubeSettings } from './types';
 
 export const defaultYouTubeConfig: youtubeSettings = {
+  profileRecommendations: undefined,
+  profileMetrics: undefined,
+  profileDistractingElements: undefined,
+
+  recommendationsHomeState: undefined,
+  recommendationsHomeLimitedNum: undefined,
+  hideRecommendedSidePanelVideo: undefined,
+  hideRecommendationsBottomVideo: undefined,
+  hideEndingVideoCards: undefined,
+  hideEndingVideoRecommendedGrid: undefined,
+
+  metricsHideViewCount: undefined,
+  metricsHideLikesDislikes: undefined,
+  metricsHideSubscribersCount: undefined,
+
+  hideHomeFeedFilterBar: undefined,
+  previewsState: undefined,
+  hideExploreTabSidebar: undefined,
+  grayNotificationCount: undefined,
+  hideCommentsSection: undefined,
+};
+
+export const profileYoutubeConfig: youtubeSettings = {
   profileRecommendations: 'hidden',
-  profilelMetrics: 'visible',
+  profileMetrics: 'visible',
   profileDistractingElements: 'hidden',
 
   recommendationsHomeState: 'limited',

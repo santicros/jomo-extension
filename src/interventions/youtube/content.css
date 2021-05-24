@@ -102,33 +102,46 @@ html[data-attention-active][data-previews-state='hoverVideo']
 }
 
 /* Hide Channel Image */
-html[data-attention-active][data-previews-state='hidden'] ytd-rich-item-renderer #details yt-img-shadow {
+html[data-attention-active][data-previews-state='hidden']
+  ytd-rich-item-renderer
+  #details
+  yt-img-shadow {
   display: none !important;
 }
 
 /* ---------------------------- VIDEO PAGE --------------------------- */
 
 /* Hide recommended videos side right panel */
-html[data-attention-active][data-hide-recommended-side-panel-video] ytd-watch-flexy #secondary-inner {
+html[data-attention-active][data-hide-recommended-side-panel-video]
+  ytd-watch-flexy
+  #secondary-inner {
   display: none;
 }
 
 /* Hide recommended videos bottom of video */
-html[data-attention-active][data-hide-recommendations-bottom-video] .ytd-watch-next-secondary-results-renderer {
+html[data-attention-active][data-hide-recommendations-bottom-video]
+  .ytd-watch-next-secondary-results-renderer {
   display: none;
 }
 
 /* Hide Video View count */
-html[data-attention-active][data-metrics-hide-view-count] ytd-video-primary-info-renderer #info #count {
+html[data-attention-active][data-metrics-hide-view-count]
+  ytd-video-primary-info-renderer
+  #info
+  #count {
   display: none !important;
 }
 /* Hide Dot next to View count */
-html[data-attention-active][data-metrics-hide-view-count] ytd-video-primary-info-renderer #info #dot {
+html[data-attention-active][data-metrics-hide-view-count]
+  ytd-video-primary-info-renderer
+  #info
+  #dot {
   display: none !important;
 }
 
 /* Hide Likes & dislikes */
-html[data-attention-active][data-metrics-hide-likes-dislikes] ytd-video-primary-info-renderer
+html[data-attention-active][data-metrics-hide-likes-dislikes]
+  ytd-video-primary-info-renderer
   #top-level-buttons
   ytd-toggle-button-renderer
   yt-formatted-string {
@@ -136,7 +149,9 @@ html[data-attention-active][data-metrics-hide-likes-dislikes] ytd-video-primary-
 }
 
 /* Hide Subscribers count */
-html[data-attention-active][data-metrics-hide-subscribers-count] #upload-info > #owner-sub-count {
+html[data-attention-active][data-metrics-hide-subscribers-count]
+  #upload-info
+  > #owner-sub-count {
   display: none;
 }
 
@@ -154,7 +169,8 @@ html[data-attention-active][data-hide-ending-video-cards] .ytp-ce-element {
   display: none !important;
 }
 /* Disable end grid video screenn */
-html[data-attention-active][data-hide-ending-video-recommended-grid] .html5-endscreen {
+html[data-attention-active][data-hide-ending-video-recommended-grid]
+  .html5-endscreen {
   display: none !important;
 }
 
@@ -166,6 +182,8 @@ html[data-attention-active][data-hide-ending-video-recommended-grid] .html5-ends
 
 /* ---------------------------- CHANNEL PAGE --------------------------- */
 /* Hide subscriber count */
-[data-attention-active][data-metrics-hide-subscribers-count] ytd-browse[page-subtype='channels'] #subscriber-count {
+[data-attention-active][data-metrics-hide-subscribers-count]
+  ytd-browse[page-subtype='channels']
+  #subscriber-count {
   display: none;
 }
