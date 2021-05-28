@@ -3,11 +3,11 @@
 // import { browser } from 'webextension-polyfill-ts';
 
 import { defaultYouTubeConfig } from './defaults';
-import { youtubeSettings } from './types';
+import { YoutubeSettings } from './types';
 
 let config = { ...defaultYouTubeConfig };
 
-function gotState(storage: { youtubeConfig: youtubeSettings }) {
+function gotState(storage: { youtubeConfig: YoutubeSettings }) {
   config = { ...defaultYouTubeConfig, ...storage.youtubeConfig };
   setup({ youtubeIsActive: true });
   docEl.dataset.attentionActive = 'true';
@@ -23,7 +23,7 @@ const docEl = document.documentElement;
 
 function dynamicLimitHomeRecommendations(recommendationNum: number) {
   const css = (num: number) => `
-[data-attention-active][data-home-recommendations-state="limited"] ytd-rich-item-renderer:nth-child(n + ${
+[data-attention-active][data-recommendations-home-state="limited"] ytd-rich-item-renderer:nth-child(n + ${
     num + 1
   }) {
 display: none;
@@ -47,7 +47,8 @@ function startBeforeDOMLoaded() {
  */
 function startOnDOMLoaded() {
   if (config.recommendationsHomeState === 'limited') {
-    dynamicLimitHomeRecommendations(config.recommendationsHomeLimitedNum);
+    if (config.recommendationsHomeLimitedNum)
+      dynamicLimitHomeRecommendations(config.recommendationsHomeLimitedNum);
   }
 }
 
@@ -63,7 +64,7 @@ function setOrDeleteDataAttr(name: string, value: number | boolean | string) {
   docEl.dataset[name] = String(value);
 }
 
-function setDataAttrsObj(configObj: youtubeSettings) {
+function setDataAttrsObj(configObj: YoutubeSettings) {
   Object.entries(configObj).forEach(([key, value]) => {
     setOrDeleteDataAttr(key, value);
   });

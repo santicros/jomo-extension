@@ -21,9 +21,11 @@ export class RadioGroup extends LitElement {
   groupValue: string | undefined;
 
   render() {
-    return html`<fieldset class="mt-4">
+    return html`<fieldset>
       <legend>
-        <h3>${this.groupLabel}</h3>
+        <h3 class="text-sm font-extrabold uppercase tracking-wide">
+          ${this.groupLabel}
+        </h3>
         <p class="text-sm">Descriptive text</p>
       </legend>
       ${this.options?.length &&

@@ -1,7 +1,7 @@
 // import { browser } from 'webextension-polyfill-ts';
 import { EventObject } from 'xstate';
 
-import { youtubeSettings } from '../interventions/youtube/types';
+import { YoutubeSettings } from '../interventions/youtube/types';
 
 // XState Assert Event Type
 export function assertEventType<
@@ -18,7 +18,7 @@ export function assertEventType<
 // Web Extension Storage APIS
 export const fetchStorageConfig = (id: string) => browser.storage.sync.get(id);
 
-export const setStorageConfig = (id: string, config: youtubeSettings) =>
+export const setStorageConfig = (id: string, config: YoutubeSettings) =>
   browser.storage.sync.set({ [id]: config });
 
 export const clearStorageConfig = () => browser.storage.sync.clear();

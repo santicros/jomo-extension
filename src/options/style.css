@@ -1,27 +1,13 @@
+:root {
+  --main-color: #3e7af7;
+  --light-gray: #c3cbdf;
+  --dark-gray: #8f97aa;
+}
+
 .wrapper {
   max-width: 40rem;
   padding: 2rem 2rem;
   margin: 0 auto;
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 800;
-}
-
-section h1 {
-  font-size: 2rem;
-  font-weight: 800;
-}
-
-section h2 {
-  font-size: 1.4rem;
-  font-weight: 800;
-}
-section h3 {
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  font-weight: 700;
 }
 
 input[type='radio'] + label {
@@ -38,4 +24,30 @@ input[type='radio'] + label:hover {
 
 input[type='checkbox'] + label:hover {
   color: rgb(80, 80, 80);
+}
+
+toggle-switch .circle {
+  transform: translateX(0%) scale(0.75);
+  background: var(--dark-gray);
+}
+toggle-switch .active .circle {
+  transform: translateX(100%) scale(0.75);
+  background: white;
+}
+toggle-switch .slider {
+  background: white;
+  border: 1px solid var(--light-gray);
+}
+toggle-switch .active .slider {
+  background: var(--main-color);
+  border: 1px solid var(--main-color);
+}
+
+input[type='checkbox']:focus-visible ~ .slider {
+  outline: 2px solid var(--main-color);
+  outline-offset: .1rem;
+}
+
+toggle-switch {
+  height: 1.5rem;
 }

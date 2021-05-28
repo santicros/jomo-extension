@@ -1,36 +1,35 @@
-export type youtubeSettings = {
-  // profile
-  profileRecommendations:
-    | 'hidden'
-    | 'limited'
-    | 'visible'
-    | 'custom'
-    | undefined;
-  profileMetrics: 'hidden' | 'visible' | 'custom' | undefined;
-  profileDistractingElements:
-    | 'hidden'
-    | 'limited'
-    | 'visible'
-    | 'custom'
-    | undefined;
-
-  // recommendations
-  recommendationsHomeState: 'hidden' | 'limited' | 'visible' | undefined;
-  recommendationsHomeLimitedNum: number | undefined;
-  hideRecommendedSidePanelVideo: boolean | undefined;
-  hideRecommendationsBottomVideo: boolean | undefined;
-  hideEndingVideoCards: boolean | undefined;
-  hideEndingVideoRecommendedGrid: boolean | undefined;
-
-  // metrics
-  metricsHideViewCount: boolean | undefined;
-  metricsHideLikesDislikes: boolean | undefined;
-  metricsHideSubscribersCount: boolean | undefined;
-
-  // distractingElements
-  hideHomeFeedFilterBar: boolean | undefined;
-  previewsState: 'hidden' | 'hoverImg' | 'hoverVideo' | 'visible' | undefined;
-  hideExploreTabSidebar: boolean | undefined;
-  grayNotificationCount: boolean | undefined;
-  hideCommentsSection: boolean | undefined;
+export type RecommendationsSettings = {
+  recommendationsHomeState?: 'visible' | 'limited' | 'hidden';
+  recommendationsHomeLimitedNum?: number;
+  hideRecommendedSidePanelVideo?: boolean;
+  hideRecommendationsBottomVideo?: boolean;
+  hideEndingVideoCards?: boolean;
+  hideEndingVideoRecommendedGrid?: boolean;
 };
+
+export type MetricsSettings = {
+  metricsHideViewCount?: boolean;
+  metricsHideLikesDislikes?: boolean;
+  metricsHideSubscribersCount?: boolean;
+};
+
+export type DistractingElementsSettings = {
+  hideHomeFeedFilterBar?: boolean;
+  previewsState?: 'visible' | 'hoverVideo' | 'hoverImg' | 'hidden';
+  hideExploreTabSidebar?: boolean;
+  grayNotificationCount?: boolean;
+  hideCommentsSection?: boolean;
+};
+
+type recommendationProfilesNames = 'visible' | 'limited' | 'hidden';
+type metricsProfilesNames = 'visible' | 'hidden';
+type distractingElementsProfilesNames = 'visible' | 'limited' | 'hidden';
+
+export type YoutubeSettings = RecommendationsSettings &
+  MetricsSettings &
+  DistractingElementsSettings & {
+    isActive: boolean;
+    profileRecommendations?: recommendationProfilesNames | 'custom';
+    profileMetrics?: metricsProfilesNames | 'custom';
+    profileDistractingElements?: distractingElementsProfilesNames | 'custom';
+  };
