@@ -1,6 +1,8 @@
 // import { browser } from 'webextension-polyfill-ts';
 import { EventObject } from 'xstate';
 
+export const isProd = import.meta.env.PROD;
+
 export const configKeysArray = ['youtubeConfig', 'twitterConfig'] as const;
 export type ConfigKey = typeof configKeysArray[number];
 

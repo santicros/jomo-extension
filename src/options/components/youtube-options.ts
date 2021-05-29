@@ -1,11 +1,11 @@
-import './components/radio-group';
-import './components/checkbox-item';
-import './components/toggle-switch';
+import './radio-group';
+import './checkbox-item';
+import './toggle-switch';
 
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { YoutubeSettings } from '../interventions/youtube/types';
+import { YoutubeSettings } from '../../interventions/youtube/types';
 
 @customElement('youtube-options')
 export class YoutubeOptions extends LitElement {

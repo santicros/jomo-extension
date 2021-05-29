@@ -1,13 +1,11 @@
 import '../global.css';
 import './style.css';
-import './youtube-options';
+import './components/youtube-options';
 
 import { interpret } from 'xstate';
 
 import { machine, machineWithActions } from './global.machine';
-import { ChangeEventPayload } from './utils';
-
-// const isProd = import.meta.env.PROD;
+import { ChangeEventPayload, isProd } from './utils';
 
 /* 
 
@@ -20,7 +18,7 @@ import { ChangeEventPayload } from './utils';
 
 const youtubeEl = document.querySelector('youtube-options');
 
-const service = interpret(machineWithActions)
+const service = interpret(isProd ? machineWithActions : machine)
   .onTransition((state) => {
     if (state.changed) {
       console.log(state);
@@ -29,6 +27,9 @@ const service = interpret(machineWithActions)
     }
   })
   .start();
+
+if (youtubeEl) youtubeEl.youtubeConfig = service.state.context.youtubeConfig;
+service.send('LOAD_CONFIG');
 
 const getChangedValue = (target: HTMLInputElement) => {
   if (target.type !== 'checkbox' && target.type !== 'radio') return;
@@ -54,9 +55,5 @@ const onInputChange = (e: Event) => {
     service.send('UPDATE_CONFIG', { changed });
   }
 };
-
-if (youtubeEl) youtubeEl.youtubeConfig = service.state.context.youtubeConfig;
-
-service.send('LOAD_CONFIG');
 
 youtubeEl?.addEventListener('change', (e) => onInputChange(e));
