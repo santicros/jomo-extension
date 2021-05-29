@@ -35,6 +35,8 @@ const updateContextConfig = machineModel.assign({
       [event.changed.property]: event.changed.value,
     };
 
+    console.log('newConfig', newConfig);
+
     return newConfig;
   },
 });
@@ -44,12 +46,13 @@ const setContextConfig = machineModel.assign({
     assertEventType(event, 'done.invoke.fetchStorageConfig');
 
     console.log(event);
-    console.log(defaultYouTubeConfig);
 
     const config = {
       ...defaultYouTubeConfig,
-      ...event.data[youtubeStorageKey],
+      ...event.data?.[youtubeStorageKey],
     };
+
+    console.log('initalConfig', config);
 
     return config;
   },

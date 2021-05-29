@@ -14,15 +14,16 @@ export class ToggleSwitch extends LitElement {
   inputId = '';
 
   render() {
-    const classes = { active: this.isChecked };
     return html`<div
-      class="relative inline-block w-12 h-6 ${classMap(classes)}"
+      class="relative inline-block w-12 h-6 ${classMap({
+        active: this.isChecked,
+      })}"
     >
       <input
         id=${this.inputId}
         type="checkbox"
+        ?checked=${this.isChecked}
         class="absolute z-20 w-full h-full opacity-0 cursor-pointer"
-        @change=${() => (this.isChecked = !this.isChecked)}
       />
       <span class="slider absolute inset-0 rounded-full"></span>
       <span

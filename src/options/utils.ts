@@ -1,7 +1,14 @@
 // import { browser } from 'webextension-polyfill-ts';
 import { EventObject } from 'xstate';
 
-import { YoutubeSettings } from '../interventions/youtube/types';
+export const configKeysArray = ['youtubeConfig', 'twitterConfig'] as const;
+export type ConfigKey = typeof configKeysArray[number];
+
+export type ChangeEventPayload = {
+  property: 'string';
+  value: 'string' | boolean;
+  source: ConfigKey;
+};
 
 // XState Assert Event Type
 export function assertEventType<
@@ -16,9 +23,10 @@ export function assertEventType<
 }
 
 // Web Extension Storage APIS
-export const fetchStorageConfig = (id: string) => browser.storage.sync.get(id);
+export const fetchStorageConfig = (id: ConfigKey | typeof configKeysArray) =>
+  browser.storage.sync.get(id);
 
-export const setStorageConfig = (id: string, config: YoutubeSettings) =>
+export const setStorageConfig = (id: ConfigKey, config: object) =>
   browser.storage.sync.set({ [id]: config });
 
 export const clearStorageConfig = () => browser.storage.sync.clear();

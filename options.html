@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Settings | JOMO</title>
+    <title>Settings | JOMO</title>
     <meta
       name="description"
       content="Configure your settings for the JOMO extension."
@@ -12,53 +12,38 @@
   </head>
   <body>
     <script type="module" src="./src/options/main.ts"></script>
-    <div class="wrapper">
-      <!-- <header>
+    <aside>
       <nav>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
+        <ul class="fixed top-0 flex flex-col">
+          <li>
+            <a href="#youtube" class="">YouTube</a>
+          </li>
+          <li>
+            <a href="#twitter" class="">Twitter</a>
+          </li>
+          <li>
+            <a href="#facebook" class="">Facebook</a>
+          </li>
+          <li>
+            <a href="#linkedin" class="">Linkedin</a>
+          </li>
         </ul>
       </nav>
-    </header> -->
-      <main class="mt-20">
+    </aside>
+    <div class="wrapper">
+      <main class="my-20">
         <h1 class="text-5xl font-black">Settings</h1>
-        <!-- <section>
-          <h1>General</h1>
-          <ul>
-            <li>
-              <fieldset>
-                <legend>
-                  <h2>Mode</h2>
-                </legend>
-                <div>
-                  <input type="radio" id="flexible" name="mode" />
-                  <label for="flexible">Flexible</label>
-                </div>
-
-                <div>
-                  <input type="radio" id="medium" name="mode" />
-                  <label for="medium">Medium</label>
-                </div>
-                <div>
-                  <input type="radio" id="strict" name="mode" />
-                  <label for="strict">Strict</label>
-                </div>
-                <div>
-                  <input type="radio" id="custom" name="mode" />
-                  <label for="custom">Custom</label>
-                </div>
-              </fieldset>
-            </li>
-          </ul>
-        </section> -->
         <p class="mt-3">Activate the pages you want to make less addictive.</p>
-        <section class="mt-10">
-            <youtube-options class="mt-10"></youtube-options>
+        <section class="mt-12">
+          <youtube-options id="youtube" class="pt-6"></youtube-options>
+        </section>
+        <section class="mt-12">
+          <div id="twitter">Twitter options</div>
+        </section>
+        <section class="mt-12">
+          <div id="facebook">Facebook options</div>
         </section>
       </main>
-      <footer></footer>
     </div>
   </body>
 </html>

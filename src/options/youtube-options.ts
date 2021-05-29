@@ -3,77 +3,32 @@ import './components/checkbox-item';
 import './components/toggle-switch';
 
 import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import { interpret } from 'xstate';
+import { customElement, property } from 'lit/decorators.js';
 
-import { machine, machineWithActions } from './machine';
-
-const isProd = import.meta.env.PROD;
-
-const getChangedValue = (target: HTMLInputElement) => {
-  if (target.type !== 'checkbox' && target.type !== 'radio') return;
-  if (target.type === 'checkbox') {
-    return {
-      property: target.id,
-      value: target.checked,
-    };
-  } else if (target.type === 'radio') {
-    return {
-      property: target.name,
-      value: target.dataset.value,
-    };
-  }
-};
+import { YoutubeSettings } from '../interventions/youtube/types';
 
 @customElement('youtube-options')
 export class YoutubeOptions extends LitElement {
   protected createRenderRoot() {
     return this;
   }
-  readonly service;
 
-  constructor() {
-    super();
-
-    this.service = interpret(isProd ? machineWithActions : machine)
-      .onTransition((state) => {
-        if (state.changed) this.requestUpdate();
-      })
-      .start();
-
-    this.service.send('GET_CONFIG');
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.service.stop();
-  }
-
-  get userYouTubeConfig() {
-    return this.service.state.context.userYouTubeConfig;
-  }
-
-  onInputChange = (e: { target: HTMLInputElement }) => {
-    const changed = getChangedValue(e.target);
-    if (!changed || changed.property == null || changed.value == null) return;
-    this.service.send('UPDATE_CONFIG', { changed });
-  };
+  @property({ type: Object })
+  youtubeConfig: YoutubeSettings = {};
 
   render() {
     return html`
-      <div @change=${this.onInputChange}>
+      <div>
         <div class="flex items-center justify-between">
-          <label for="isActive" class="flex-1 cursor-pointer"
-            ><h2 class="inline-block text-3xl font-extrabold">
-              YouTube
-            </h2></label
-          >
+          <label for="isActive" class="flex-1 cursor-pointer">
+            <h2 class="inline-block text-3xl font-extrabold">YouTube</h2>
+          </label>
           <toggle-switch
             inputId="isActive"
-            ?ischecked=${this.userYouTubeConfig.isActive}
+            ?ischecked=${this.youtubeConfig.isActive}
           ></toggle-switch>
         </div>
-        ${this.userYouTubeConfig.isActive
+        ${this.youtubeConfig.isActive
           ? html`<div>
               <section class="mt-6">
                 <h1 class="text-2xl font-extrabold">Recommendations</h1>
@@ -86,10 +41,10 @@ export class YoutubeOptions extends LitElement {
                     { name: 'hidden', label: 'Hidden' },
                     { name: 'custom', label: 'Custom' },
                   ]}
-                  .groupValue=${this.userYouTubeConfig.profileRecommendations}
+                  .groupValue=${this.youtubeConfig.profileRecommendations}
                 ></radio-group>
 
-                ${this.userYouTubeConfig.profileRecommendations === 'custom'
+                ${this.youtubeConfig.profileRecommendations === 'custom'
                   ? html`<p>Advanced Settings Recommendations</p>
                       <radio-group
                         groupName="recommendationsHomeState"
@@ -99,10 +54,10 @@ export class YoutubeOptions extends LitElement {
                           { name: 'limited', label: 'Limited' },
                           { name: 'hidden', label: 'Hidden' },
                         ]}
-                        .groupValue=${this.userYouTubeConfig
+                        .groupValue=${this.youtubeConfig
                           .recommendationsHomeState}
                       ></radio-group>
-                      ${this.userYouTubeConfig.recommendationsHomeState ===
+                      ${this.youtubeConfig.recommendationsHomeState ===
                       'limited'
                         ? html`<label for="recommendationsHomeLimitedNum"
                               >Limited number
@@ -117,7 +72,7 @@ export class YoutubeOptions extends LitElement {
                       <checkbox-item
                         itemName="hideRecommendedSidePanelVideo"
                         itemLabel="hideRecommendedSidePanelVideo"
-                        .itemValue=${this.userYouTubeConfig
+                        .itemValue=${this.youtubeConfig
                           .hideRecommendedSidePanelVideo}
                       ></checkbox-item>
 
@@ -125,21 +80,20 @@ export class YoutubeOptions extends LitElement {
                         itemName="hideRecommendationsBottomVideo"
                         itemLabel="hideRecommendationsBottomVideo"
                         itemDescription="Praesent eleifend ullamcorper massa, eu scelerisque lectus placerat a. Etiam sapien mauris, dictum in justo id, blandit rutrum metus."
-                        .itemValue=${this.userYouTubeConfig
+                        .itemValue=${this.youtubeConfig
                           .hideRecommendationsBottomVideo}
                       ></checkbox-item>
 
                       <checkbox-item
                         itemName="hideEndingVideoCards"
                         itemLabel="hideEndingVideoCards"
-                        .itemValue=${this.userYouTubeConfig
-                          .hideEndingVideoCards}
+                        .itemValue=${this.youtubeConfig.hideEndingVideoCards}
                       ></checkbox-item>
 
                       <checkbox-item
                         itemName="hideEndingVideoRecommendedGrid"
                         itemLabel="hideEndingVideoRecommendedGrid"
-                        .itemValue=${this.userYouTubeConfig
+                        .itemValue=${this.youtubeConfig
                           .hideEndingVideoRecommendedGrid}
                       ></checkbox-item>`
                   : null}
@@ -155,27 +109,26 @@ export class YoutubeOptions extends LitElement {
                     { name: 'hidden', label: 'Hidden' },
                     { name: 'custom', label: 'Custom' },
                   ]}
-                  .groupValue=${this.userYouTubeConfig.profileMetrics}
+                  .groupValue=${this.youtubeConfig.profileMetrics}
                 ></radio-group>
 
-                ${this.userYouTubeConfig.profileMetrics === 'custom'
+                ${this.youtubeConfig.profileMetrics === 'custom'
                   ? html`<p>Advanced Settings metrics</p>
                       <checkbox-item
                         itemName="metricsHideViewCount"
                         itemLabel="metricsHideViewCount"
-                        .itemValue=${this.userYouTubeConfig
-                          .metricsHideViewCount}
+                        .itemValue=${this.youtubeConfig.metricsHideViewCount}
                       ></checkbox-item>
                       <checkbox-item
                         itemName="metricsHideLikesDislikes"
                         itemLabel="metricsHideLikesDislikes"
-                        .itemValue=${this.userYouTubeConfig
+                        .itemValue=${this.youtubeConfig
                           .metricsHideLikesDislikes}
                       ></checkbox-item>
                       <checkbox-item
                         itemName="metricsHideSubscribersCount"
                         itemLabel="metricsHideSubscribersCount"
-                        .itemValue=${this.userYouTubeConfig
+                        .itemValue=${this.youtubeConfig
                           .metricsHideSubscribersCount}
                       ></checkbox-item>`
                   : null}
@@ -192,11 +145,10 @@ export class YoutubeOptions extends LitElement {
                     { name: 'hidden', label: 'Hidden' },
                     { name: 'custom', label: 'Custom' },
                   ]}
-                  .groupValue=${this.userYouTubeConfig
-                    .profileDistractingElements}
+                  .groupValue=${this.youtubeConfig.profileDistractingElements}
                 ></radio-group>
 
-                ${this.userYouTubeConfig.profileDistractingElements === 'custom'
+                ${this.youtubeConfig.profileDistractingElements === 'custom'
                   ? html`<p>Advanced Settings distractingElements</p>
                       <radio-group
                         groupName="previewsState"
@@ -211,36 +163,33 @@ export class YoutubeOptions extends LitElement {
                             description: 'This is an option description',
                           },
                         ]}
-                        .groupValue=${this.userYouTubeConfig.previewsState}
+                        .groupValue=${this.youtubeConfig.previewsState}
                       ></radio-group>
 
                       <checkbox-item
                         itemName="hideHomeFeedFilterBar"
                         itemLabel="Hide Home Feed FilterBar"
                         itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed nunc nec felis imperdiet fermentum. Donec at turpis ac risus aliquet auctor. Pellentesque mollis fermentum lacus, sed auctor libero elementum et. "
-                        .itemValue=${this.userYouTubeConfig
-                          .hideHomeFeedFilterBar}
+                        .itemValue=${this.youtubeConfig.hideHomeFeedFilterBar}
                       ></checkbox-item>
 
                       <checkbox-item
                         itemName="hideExploreTabSidebar"
                         itemLabel="Hide Explore Tab Sidebar"
-                        .itemValue=${this.userYouTubeConfig
-                          .hideExploreTabSidebar}
+                        .itemValue=${this.youtubeConfig.hideExploreTabSidebar}
                       ></checkbox-item>
 
                       <checkbox-item
                         itemName="grayNotificationCount"
                         itemLabel="Gray Notification Count"
                         itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                        .itemValue=${this.userYouTubeConfig
-                          .grayNotificationCount}
+                        .itemValue=${this.youtubeConfig.grayNotificationCount}
                       ></checkbox-item>
 
                       <checkbox-item
                         itemName="hideCommentsSection"
                         itemLabel="Hide Comments Section"
-                        .itemValue=${this.userYouTubeConfig.hideCommentsSection}
+                        .itemValue=${this.youtubeConfig.hideCommentsSection}
                       ></checkbox-item> `
                   : null}
               </section>
@@ -248,5 +197,11 @@ export class YoutubeOptions extends LitElement {
           : null}
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'youtube-options': YoutubeOptions;
   }
 }
