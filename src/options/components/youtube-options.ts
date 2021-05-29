@@ -5,7 +5,7 @@ import './toggle-switch';
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { YoutubeSettings } from '../../interventions/youtube/types';
+import { defaultYouTubeConfig } from '../../interventions/youtube/defaults';
 
 @customElement('youtube-options')
 export class YoutubeOptions extends LitElement {
@@ -14,7 +14,7 @@ export class YoutubeOptions extends LitElement {
   }
 
   @property({ type: Object })
-  youtubeConfig: YoutubeSettings = {};
+  youtubeConfig = defaultYouTubeConfig;
 
   render() {
     return html`

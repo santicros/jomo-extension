@@ -5,7 +5,7 @@ import './components/youtube-options';
 import { interpret } from 'xstate';
 
 import { machine, machineWithActions } from './global.machine';
-import { ChangeEventPayload, isProd } from './utils';
+import { ChangeEventPayload, ConfigKey, isProd } from './utils';
 
 /* 
 
@@ -37,23 +37,21 @@ const getChangedValue = (target: HTMLInputElement) => {
     return {
       property: target.id,
       value: target.checked,
-      source: 'youtubeConfig',
     } as ChangeEventPayload;
   } else if (target.type === 'radio') {
     return {
       property: target.name,
       value: target.dataset.value,
-      source: 'youtubeConfig',
     } as ChangeEventPayload;
   }
 };
 
-const onInputChange = (e: Event) => {
+const onInputChange = (e: Event, source: ConfigKey) => {
   if (e.target instanceof HTMLInputElement) {
     const changed = getChangedValue(e.target);
     if (!changed || changed.property == null || changed.value == null) return;
-    service.send('UPDATE_CONFIG', { changed });
+    service.send('UPDATE_CONFIG', { changed: { ...changed, source } });
   }
 };
 
-youtubeEl?.addEventListener('change', (e) => onInputChange(e));
+youtubeEl?.addEventListener('change', (e) => onInputChange(e, 'youtubeConfig'));
