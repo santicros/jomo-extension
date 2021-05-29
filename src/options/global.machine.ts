@@ -35,8 +35,6 @@ const machineModel = createModel(
 
 const updateContextConfig = machineModel.assign((context, event) => {
   assertEventType(event, 'UPDATE_CONFIG');
-  if (!event.changed.source) return {};
-
   return {
     [event.changed.source]: {
       ...context[event.changed.source],
@@ -64,6 +62,7 @@ const setContextConfig = machineModel.assign({
 
 export const machine = createMachine<typeof machineModel>(
   {
+    id: 'settings',
     context: machineModel.initialContext,
     initial: 'idle',
     states: {
@@ -72,8 +71,12 @@ export const machine = createMachine<typeof machineModel>(
       },
       loading: {
         invoke: {
+          id: 'fetchRemoteConfig',
           src: 'fetchRemoteConfig',
           onDone: { target: 'loaded', actions: 'setContextConfig' },
+          onError: {
+            actions: (_, event) => console.log('ERROR', event.data),
+          },
         },
       },
       loaded: {
