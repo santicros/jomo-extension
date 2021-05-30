@@ -7,29 +7,16 @@ import { interpret } from 'xstate';
 import { machine, machineWithActions } from './global.machine';
 import { ChangeEventPayload, ConfigKey, isProd } from './utils';
 
-/* 
-
-1. INIT TEMPLATE WITH DEFAULT CONFIG
-2. FETCH ALL CONFIGS. GLOBAL, YOUTUBE, TWITTER, FACEBOOK...
-3. PASS CONFIG TO TEMPLATE
-4. ON INPUT CHANGE, CHANGE CORRESPONDING CONFIG STORAGE.
-
-*/
-
 const youtubeEl = document.querySelector('youtube-options');
 
 const service = interpret(isProd ? machineWithActions : machine)
   .onTransition((state) => {
     if (state.changed) {
-      console.log(state);
       if (youtubeEl)
         youtubeEl.youtubeConfig = service.state.context.youtubeConfig;
     }
   })
   .start();
-
-if (youtubeEl) youtubeEl.youtubeConfig = service.state.context.youtubeConfig;
-service.send('LOAD_CONFIG');
 
 const getChangedValue = (target: HTMLInputElement) => {
   if (target.type !== 'checkbox' && target.type !== 'radio') return;
@@ -54,4 +41,13 @@ const onInputChange = (e: Event, source: ConfigKey) => {
   }
 };
 
-youtubeEl?.addEventListener('change', (e) => onInputChange(e, 'youtubeConfig'));
+function main() {
+  if (youtubeEl) youtubeEl.youtubeConfig = service.state.context.youtubeConfig;
+  service.send('LOAD_CONFIG');
+
+  youtubeEl?.addEventListener('change', (e) =>
+    onInputChange(e, 'youtubeConfig')
+  );
+}
+
+main();

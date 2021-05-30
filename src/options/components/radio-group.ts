@@ -18,6 +18,9 @@ export class RadioGroup extends LitElement {
   groupName: string | undefined;
 
   @property({ type: String })
+  groupDescription: string | undefined;
+
+  @property({ type: String })
   groupValue: string | undefined;
 
   render() {
@@ -26,7 +29,7 @@ export class RadioGroup extends LitElement {
         <h3 class="text-sm font-extrabold uppercase tracking-wide">
           ${this.groupLabel}
         </h3>
-        <p class="text-sm">Descriptive text</p>
+        <p class="text-sm">${this.groupDescription}</p>
       </legend>
       ${this.options?.length &&
       html`
