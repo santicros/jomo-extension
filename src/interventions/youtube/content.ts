@@ -1,23 +1,9 @@
 /* global patchOrAddPatchCSS */
 
-// import { browser } from 'webextension-polyfill-ts';
+import { browser } from 'webextension-polyfill-ts';
 
 import { defaultYouTubeConfig } from './defaults';
 import { YoutubeSettings } from './types';
-
-let config = { ...defaultYouTubeConfig };
-
-function gotState(storage: { youtubeConfig: YoutubeSettings }) {
-  config = { ...defaultYouTubeConfig, ...storage.youtubeConfig };
-  setup({ youtubeIsActive: true });
-  docEl.dataset.attentionActive = 'true';
-}
-function onError(error) {
-  console.log(error);
-}
-
-// browser.storage.sync.set({ kitten, monster }).then(setItem, onError);
-browser.storage.sync.get('youtubeConfig').then(gotState, onError);
 
 const docEl = document.documentElement;
 
@@ -36,16 +22,9 @@ display: none;
 }
 
 /**
- * Main function executed before DOM loaded
- */
-function startBeforeDOMLoaded() {
-  docEl.dataset.attentionActive = 'true';
-}
-
-/**
  * Main executed after DOM loaded
  */
-function startOnDOMLoaded() {
+function startOnDOMLoaded(config: typeof defaultYouTubeConfig) {
   if (config.recommendationsHomeState === 'limited') {
     if (config.recommendationsHomeLimitedNum)
       dynamicLimitHomeRecommendations(config.recommendationsHomeLimitedNum);
@@ -70,26 +49,53 @@ function setDataAttrsObj(configObj: YoutubeSettings) {
   });
 }
 
-// browser.runtime.onMessage.addListener((message) => {
-//   if (message.command === 'activate') {
-//     console.log('activating');
-//     docEl.dataset.attentionActive = 'true';
-//   } else if (message.command === 'deactivate') {
-//     console.log('deactivating');
-//     delete docEl.dataset.attentionActive;
-//   }
-// });
-
-function setup(state) {
-  if (state.youtubeIsActive) {
-    startBeforeDOMLoaded();
+function setup(state: typeof defaultYouTubeConfig) {
+  if (state.isActive) {
+    setDataAttrsObj(state);
     if (document.readyState === 'complete') {
-      startOnDOMLoaded();
+      startOnDOMLoaded(state);
     } else {
-      document.addEventListener('DOMContentLoaded', startOnDOMLoaded);
+      document.addEventListener('DOMContentLoaded', () =>
+        startOnDOMLoaded(state)
+      );
     }
-    setDataAttrsObj(config);
+  } else {
+    setOrDeleteDataAttr('isActive', false);
   }
 }
 
-// browser.storage.sync.get('youtubeIsActive').then(setup);
+function logStorageChange(changes) {
+  console.log('logStorageChange', changes);
+  let changedItems = Object.keys(changes);
+  for (let item of changedItems) {
+    console.log(item + ' has changed. New value:');
+    console.log(changes[item].newValue);
+  }
+
+  const newStoredConfig = changes.youtubeConfig.newValue;
+  const newConfig = {
+    ...defaultYouTubeConfig,
+    ...newStoredConfig,
+  };
+  setup(newConfig);
+}
+
+async function main() {
+  let storedConfig;
+  try {
+    storedConfig = await browser.storage.sync.get('youtubeConfig');
+  } catch (error) {
+    console.error(error);
+  }
+
+  browser.storage.onChanged.addListener(logStorageChange);
+
+  if (!storedConfig) return;
+
+  if (storedConfig) {
+    const config = { ...defaultYouTubeConfig, ...storedConfig.youtubeConfig };
+    setup(config);
+  }
+}
+
+main();
