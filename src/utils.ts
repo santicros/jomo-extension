@@ -32,3 +32,11 @@ function patchOrAddPatchCSS(id: string, css: string) {
   }
   patchCSS(id, css);
 }
+
+function documentReady(fn) {
+  if (document.readyState != 'loading') {
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+}

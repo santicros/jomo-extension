@@ -1,23 +1,52 @@
+/* -------------- ASIDE LEFT -------------- */
+html[data-is-active] [data-testid='AppTabBar_Explore_Link'] {
+  display: none;
+}
+
 /* -------------- ASIDE RIGHT -------------- */
 
 /* You might like */
-aside[role='complementary'] {
+html[data-is-active] aside[role='complementary'] {
   opacity: 0.1;
 }
 
-/* What's happening */
-[aria-label='Timeline: Trending now'] {
+html[data-is-active] [data-testid='sidebarColumn'] [role='region'] {
   opacity: 0.1;
+}
+
+/* Hide metrics */
+html[data-is-active] [data-testid='reply'] > div > div:last-child {
+  display: none;
+}
+html[data-is-active] [data-testid='retweet'] > div > div:last-child, [data-testid='unretweet'] > div > div:last-child {
+  display: none;
+}
+html[data-is-active] [data-testid='like'] > div > div:last-child, [data-testid='unlike'] > div > div:last-child{
+  display: none;
 }
 
 /* -------------- WITHOUT SIGNUP -------------- */
-/* Footer Don't miss what's happening */
-#layers
-  > div.css-1dbjc4n.r-aqfbo4.r-1p0dtai.r-1d2f490.r-12vffkv.r-1xcajam.r-zchlnj {
+
+/* Aside "New to Twitter?" */
+html[data-is-active] [data-testid='sidebarColumn'] [aria-label='Sign up'] {
   opacity: 0.1;
 }
 
-/* Aside New to Twitter? */
-[data-testid='sidebarColumn'] [aria-label='Sign up'] {
-  opacity: 0.1;
+/* -------------- PRIMARY COLUMN -------------- */
+/* Followers & Following Main Profile */
+html[data-is-active] [data-testid="primaryColumn"] div.r-13awgt0:nth-child(5) a {
+  display: inherit;
 }
+html[data-is-active] [data-testid="primaryColumn"] div.r-13awgt0:nth-child(5) a > span:first-child {
+  display: none;
+}
+
+/* [aria-label] {
+  border: 2px solid red;
+}
+[data-testid] {
+  border: 2px solid orange;
+}
+[role="region"] {
+  border: 2px solid green;
+} */

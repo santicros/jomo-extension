@@ -18,7 +18,7 @@ html[data-is-active][data-metrics-hide-view-count]
 
 /* ---------------------------- HOME PAGE --------------------------- */
 /* Completly hide home recommendations */
-html[data-is-active][data-recommendations-home-state='hidden'] ytd-browse {
+html[data-is-active][data-recommendations-home-state='hidden'] ytd-browse[page-subtype="home"] {
   display: none;
 }
 

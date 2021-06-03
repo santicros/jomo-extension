@@ -8,11 +8,15 @@ import esbuild from 'rollup-plugin-esbuild';
 
 const plugins = [resolve(), commonjs(), esbuild()];
 
-/** @type {RollupOptions} */
-const content = {
-  input: './src/interventions/youtube/content.ts',
+/**
+ *
+ * @param {*} name
+ * @returns {RollupOptions}
+ */
+const contentScript = (name) => ({
+  input: `./src/interventions/${name}/content.ts`,
   output: {
-    file: 'dist/interventions/youtube/content.js',
+    file: `dist/interventions/${name}/content.js`,
     format: 'iife',
   },
   plugins: [
@@ -20,12 +24,25 @@ const content = {
     copy({
       targets: [
         {
-          src: ['./src/interventions/youtube/content.css'],
-          dest: 'dist/interventions/youtube',
+          src: [`./src/interventions/${name}/content.css`],
+          dest: `dist/interventions/${name}`,
         },
       ],
     }),
   ],
+});
+
+const youtubeContent = contentScript('youtube');
+const twitterContent = contentScript('twitter');
+
+/** @type {RollupOptions} */
+const twitterInPage = {
+  input: './src/interventions/twitter/in_page.ts',
+  output: {
+    file: 'dist/interventions/twitter/in_page.js',
+    format: 'iife',
+  },
+  plugins: [...plugins],
 };
 
 /** @type {RollupOptions} */
@@ -39,4 +56,4 @@ const utils = {
   treeshake: false,
 };
 
-export default [content, utils];
+export default [youtubeContent, twitterContent, twitterInPage, utils];

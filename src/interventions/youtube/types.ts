@@ -21,9 +21,15 @@ export type DistractingElementsSettings = {
   hideCommentsSection?: boolean;
 };
 
-type recommendationProfilesNames = 'visible' | 'limited' | 'hidden';
-type metricsProfilesNames = 'visible' | 'hidden';
-type distractingElementsProfilesNames = 'visible' | 'limited' | 'hidden';
+export type recommendationProfilesNames = 'visible' | 'limited' | 'hidden';
+export type metricsProfilesNames = 'visible' | 'hidden';
+export type distractingElementsProfilesNames = 'visible' | 'limited' | 'hidden';
+
+export const profileNames = [
+  'profileRecommendations',
+  'profileMetrics',
+  'profileDistractingElements',
+] as const;
 
 export type YoutubeSettings = RecommendationsSettings &
   MetricsSettings &

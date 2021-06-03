@@ -1,70 +1,92 @@
 import {
+  distractingElementsProfilesNames,
   DistractingElementsSettings,
+  metricsProfilesNames,
   MetricsSettings,
+  recommendationProfilesNames,
   RecommendationsSettings,
   YoutubeSettings,
 } from './types';
 
-const recommendationsProfileHidden: RecommendationsSettings = {
-  recommendationsHomeState: 'hidden',
-  recommendationsHomeLimitedNum: undefined,
-  hideRecommendedSidePanelVideo: true,
-  hideRecommendationsBottomVideo: true,
-  hideEndingVideoCards: true,
-  hideEndingVideoRecommendedGrid: true,
-};
+export const profileRecommendations: Record<
+  recommendationProfilesNames,
+  RecommendationsSettings
+> = {
+  visible: {
+    recommendationsHomeState: 'visible',
+    recommendationsHomeLimitedNum: undefined,
+    hideRecommendedSidePanelVideo: false,
+    hideRecommendationsBottomVideo: false,
+    hideEndingVideoCards: false,
+    hideEndingVideoRecommendedGrid: false,
+  },
+  limited: {
+    recommendationsHomeState: 'limited',
+    recommendationsHomeLimitedNum: 4,
+    hideRecommendedSidePanelVideo: true,
+    hideRecommendationsBottomVideo: true,
+    hideEndingVideoCards: true,
+    hideEndingVideoRecommendedGrid: true,
+  },
+  hidden: {
+    recommendationsHomeState: 'hidden',
+    recommendationsHomeLimitedNum: undefined,
+    hideRecommendedSidePanelVideo: true,
+    hideRecommendationsBottomVideo: true,
+    hideEndingVideoCards: true,
+    hideEndingVideoRecommendedGrid: true,
+  },
+} as const;
 
-const recommendationsProfileLimited: RecommendationsSettings = {
-  recommendationsHomeState: 'hidden',
-  recommendationsHomeLimitedNum: 4,
-  hideRecommendedSidePanelVideo: true,
-  hideRecommendationsBottomVideo: true,
-  hideEndingVideoCards: true,
-  hideEndingVideoRecommendedGrid: true,
-};
+export const profileMetrics: Record<metricsProfilesNames, MetricsSettings> = {
+  visible: {
+    metricsHideViewCount: false,
+    metricsHideLikesDislikes: false,
+    metricsHideSubscribersCount: false,
+  },
+  hidden: {
+    metricsHideViewCount: true,
+    metricsHideLikesDislikes: true,
+    metricsHideSubscribersCount: true,
+  },
+} as const;
 
-const metricsProfileHidden: MetricsSettings = {
-  metricsHideViewCount: true,
-  metricsHideLikesDislikes: true,
-  metricsHideSubscribersCount: true,
-};
-
-const distractingElementsProfileLimited: DistractingElementsSettings = {
-  hideHomeFeedFilterBar: false,
-  previewsState: 'hoverVideo',
-  hideExploreTabSidebar: true,
-  grayNotificationCount: true,
-  hideCommentsSection: false,
-};
-
-const distractingElementsProfileHidden: DistractingElementsSettings = {
-  hideHomeFeedFilterBar: true,
-  previewsState: 'hidden',
-  hideExploreTabSidebar: true,
-  grayNotificationCount: true,
-  hideCommentsSection: true,
-};
-
-export const recommendationsProfile: Record<string, RecommendationsSettings> = {
-  limited: recommendationsProfileLimited,
-  hidden: recommendationsProfileHidden,
-};
-
-export const metricsProfile: Record<string, MetricsSettings> = {
-  hidden: metricsProfileHidden,
-};
-
-export const distractingElementsProfile: Record<
-  string,
+export const profileDistractingElements: Record<
+  distractingElementsProfilesNames,
   DistractingElementsSettings
 > = {
-  limited: distractingElementsProfileHidden,
-  hidden: distractingElementsProfileLimited,
-};
+  visible: {
+    hideHomeFeedFilterBar: false,
+    previewsState: 'visible',
+    hideExploreTabSidebar: false,
+    grayNotificationCount: false,
+    hideCommentsSection: false,
+  },
+  limited: {
+    hideHomeFeedFilterBar: false,
+    previewsState: 'hoverVideo',
+    hideExploreTabSidebar: true,
+    grayNotificationCount: true,
+    hideCommentsSection: false,
+  },
+  hidden: {
+    hideHomeFeedFilterBar: true,
+    previewsState: 'hidden',
+    hideExploreTabSidebar: true,
+    grayNotificationCount: true,
+    hideCommentsSection: true,
+  },
+} as const;
+
+export const profiles = {
+  profileRecommendations,
+  profileMetrics,
+  profileDistractingElements,
+} as const;
 
 export const defaultYouTubeConfig: YoutubeSettings = {
   isActive: false,
   profileRecommendations: 'limited',
   profileMetrics: 'hidden',
   profileDistractingElements: 'limited',
-};
+} as const;

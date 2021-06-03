@@ -90,6 +90,8 @@ export class YoutubeOptions extends LitElement {
                                   <input
                                     type="number"
                                     placeholder="10"
+                                    min="0"
+                                    max="200"
                                     id="recommendationsHomeLimitedNum"
                                   />`
                               : null}

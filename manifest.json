@@ -37,12 +37,12 @@
     {
       "matches": ["*://*.twitter.com/*", "*://twitter.com/*"],
       "css": ["interventions/twitter/content.css"],
-      "js": ["interventions/twitter/content.js"],
+      "js": ["utils.js", "interventions/twitter/content.js"],
       "run_at": "document_start"
     }
   ],
   "permissions": ["activeTab", "storage"],
-  "web_accessible_resources": [],
+  "web_accessible_resources": ["interventions/twitter/in_page.js"],
   "browser_specific_settings": {
     "gecko": {
       "id": "scros97@gmail.com"
