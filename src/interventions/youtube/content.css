@@ -2,23 +2,15 @@
 
 /* Hide video View Count */
 html[data-is-active][data-metrics-hide-view-count]
-  ytd-rich-grid-media
   #metadata-line
-  > span:nth-child(1),
-html[data-is-active][data-metrics-hide-view-count]
-  ytd-grid-video-renderer
-  #metadata-line
-  > span:nth-child(1),
-html[data-is-active][data-metrics-hide-view-count]
-  ytd-video-renderer
-  #metadata-line
-  > span:nth-child(1) {
+  > span:first-child {
   display: none !important;
 }
 
 /* ---------------------------- HOME PAGE --------------------------- */
 /* Completly hide home recommendations */
-html[data-is-active][data-recommendations-home-state='hidden'] ytd-browse[page-subtype="home"] {
+html[data-is-active][data-recommendations-home-state='hidden']
+  ytd-browse[page-subtype='home'] {
   display: none;
 }
 

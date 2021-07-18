@@ -1,7 +1,11 @@
 :root {
-  --main-color: #3e7af7;
-  --light-gray: #c3cbdf;
-  --dark-gray: #8f97aa;
+  --main: #0c0c0d;
+  --main-highlight: #262626;
+
+  --light-gray: #f1f2f3;
+  --light-gray-highlight: #f4f6f8;
+
+  --dark-gray: #2b2b2b;
 }
 
 .wrapper {
@@ -10,46 +14,58 @@
   margin: 0 auto;
 }
 
-input[type='radio'] + label {
-  background: rgb(242, 243, 245);
+radio-group input[type='radio'] + label {
+  background: var(--light-gray);
+  font-weight: 600;
 }
 
-input[type='radio']:checked + label {
-  background: rgb(224, 226, 229);
+radio-group input[type='radio']:checked + label {
+  background: var(--main);
+  color: white;
 }
 
-input[type='radio'] + label:hover {
-  filter: brightness(1.02);
+radio-group input[type='radio'] + label:hover {
+  background: var(--light-gray-highlight);
+}
+radio-group input[type='radio']:checked + label:hover {
+  background: var(--main-highlight);
 }
 
 input[type='checkbox'] + label:hover {
   color: rgb(80, 80, 80);
 }
 
+toggle-switch {
+  height: 1.5rem;
+}
+
 toggle-switch .circle {
   transform: translateX(0%) scale(0.75);
   background: var(--dark-gray);
 }
+
 toggle-switch .active .circle {
   transform: translateX(100%) scale(0.75);
   background: white;
 }
+
 toggle-switch .slider {
   background: white;
-  border: 1px solid var(--light-gray);
+  border: 1px solid var(--dark-gray);
 }
 toggle-switch .active .slider {
-  background: var(--main-color);
-  border: 1px solid var(--main-color);
+  background: var(--main);
+  border: 1px solid var(--main);
 }
 
-input[type='checkbox']:focus-visible ~ .slider {
-  outline: 2px solid var(--main-color);
+toggle-switch:hover .active .slider {
+  background: var(--main-highlight);
+  border: 1px solid var(--main-highlight);
+}
+
+toggle-switch input[type='checkbox']:focus-visible ~ .slider {
+  outline: 2px solid var(--main);
   outline-offset: 0.1rem;
-}
-
-toggle-switch {
-  height: 1.5rem;
 }
 
 details[open] summary ~ div {

@@ -1,9 +1,9 @@
 {
   "author": "Santi Cros",
-  "homepage_url": "https://santicros.github.io/",
+  "homepage_url": "https://www.feelthejomo.com/",
   "manifest_version": 2,
-  "name": "extension-attention",
-  "short_name": "AttentionLab",
+  "name": "jomo",
+  "short_name": "JOMO",
   "version": "0.0.1",
   "description": "Make internet a healthier place",
   "icons": {
@@ -19,11 +19,7 @@
     "default_icon": {
       "64": "assets/icons/icon.png"
     },
-    "show_matches": [
-      "*://*.twitter.com/*",
-      "*://*.youtube.com/*",
-      "*://youtube.com/*"
-    ],
+    "show_matches": ["*://*.twitter.com/*", "*://*.youtube.com/*"],
     "default_popup": "popup.html",
     "default_title": "disconnect page"
   },
@@ -31,16 +27,27 @@
     {
       "matches": ["*://*.youtube.com/*", "*://youtube.com/*"],
       "css": ["interventions/youtube/content.css"],
-      "js": ["utils.js", "interventions/youtube/content.js"],
+      "js": [
+        "browser-polyfill.min.js",
+        "utils.js",
+        "interventions/youtube/content.js"
+      ],
       "run_at": "document_start"
     },
     {
       "matches": ["*://*.twitter.com/*", "*://twitter.com/*"],
       "css": ["interventions/twitter/content.css"],
-      "js": ["utils.js", "interventions/twitter/content.js"],
+      "js": [
+        "browser-polyfill.min.js",
+        "utils.js",
+        "interventions/twitter/content.js"
+      ],
       "run_at": "document_start"
     }
   ],
+  "background": {
+    "page": "background.html"
+  },
   "permissions": ["activeTab", "storage"],
   "web_accessible_resources": ["interventions/twitter/in_page.js"],
   "browser_specific_settings": {

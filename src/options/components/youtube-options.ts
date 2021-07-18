@@ -6,6 +6,7 @@ import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { defaultYouTubeConfig } from '../../interventions/youtube/defaults';
+import { expandableCard, headerSection } from './globals';
 
 @customElement('youtube-options')
 export class YoutubeOptions extends LitElement {
@@ -19,50 +20,28 @@ export class YoutubeOptions extends LitElement {
   render() {
     return html`
       <div>
-        <div class="flex items-center justify-between">
-          <label for="isActive" class="flex-1 cursor-pointer">
-            <h2 class="inline-block text-3xl font-extrabold">YouTube</h2>
-          </label>
-          <toggle-switch
-            inputId="isActive"
-            ?ischecked=${this.youtubeConfig.isActive}
-          ></toggle-switch>
-        </div>
+        ${headerSection('YouTube', this.youtubeConfig.isActive)}
         ${this.youtubeConfig.isActive
-          ? html`<div>
-              <section class="mt-6">
-                <details open>
-                  <summary
-                    class="text-xl font-extrabold cursor-pointer flex items-center"
-                  >
-                    <div class="chevron">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="3"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </div>
-
-                    <h1 class="inline ml-1">Recommendations</h1>
-                  </summary>
-                  <div class="mt-2 p-6 border rounded-md">
-                    <radio-group
+          ? html`<div class="mt-4 space-y-6">
+              <section>
+                ${expandableCard(
+                  'Recommendations',
+                  html`<radio-group
                       groupName="profileRecommendations"
-                      groupLabel="Recommendations Profile"
-                      groupDescription="Descriptive text"
+                      groupLabel="Profile"
+                      groupDescription="Choose a default profile that affects many elements on the page, or create a custom setting."
                       .options=${[
-                        { name: 'visible', label: 'Visible' },
+                        {
+                          name: 'visible',
+                          label: 'Visible',
+                        },
                         { name: 'limited', label: 'Limited' },
-                        { name: 'hidden', label: 'Hidden' },
+                        {
+                          name: 'hidden',
+                          label: 'Hidden',
+                          description:
+                            'Remove addictive algoritmic recommendations',
+                        },
                         { name: 'custom', label: 'Custom' },
                       ]}
                       .groupValue=${this.youtubeConfig.profileRecommendations}
@@ -126,39 +105,16 @@ export class YoutubeOptions extends LitElement {
                             ></checkbox-item>
                           </div>
                         `
-                      : null}
-                  </div>
-                </details>
+                      : null}`
+                )}
               </section>
 
-              <section class="mt-6">
-                <details open>
-                  <summary
-                    class="text-xl font-extrabold cursor-pointer flex items-center"
-                  >
-                    <div class="chevron">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="3"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </div>
-
-                    <h1 class="inline ml-1">Metrics</h1>
-                  </summary>
-                  <div class="mt-2 p-6 border rounded-md">
-                    <radio-group
+              <section>
+                ${expandableCard(
+                  'Metrics',
+                  html`<radio-group
                       groupName="profileMetrics"
-                      groupLabel="Metrics Profile"
+                      groupLabel="Profile"
                       .options=${[
                         { name: 'visible', label: 'Visible' },
                         { name: 'hidden', label: 'Hidden' },
@@ -188,99 +144,74 @@ export class YoutubeOptions extends LitElement {
                               .metricsHideSubscribersCount}
                           ></checkbox-item>
                         </div>`
-                      : null}
-                  </div>
-                </details>
+                      : null}`
+                )}
               </section>
 
-              <section class="mt-6">
-                <details open>
-                  <summary
-                    class="text-xl font-extrabold cursor-pointer flex items-center"
-                  >
-                    <div class="chevron">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="3"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </div>
+              <section>
+                ${expandableCard(
+                  'Distracting Elements',
+                  html`<radio-group
+                  groupName="profileDistractingElements"
+                  groupLabel="Profile"
+                  .options=${[
+                    { name: 'visible', label: 'Visible' },
+                    { name: 'limited', label: 'Limited' },
+                    { name: 'hidden', label: 'Hidden' },
+                    { name: 'custom', label: 'Custom' },
+                  ]}
+                  .groupValue=${this.youtubeConfig.profileDistractingElements}
+                ></radio-group>
 
-                    <h1 class="inline ml-1">Distracting Elements</h1>
-                  </summary>
-                  <div class="mt-2 p-6 border rounded-md">
-                    <radio-group
-                      groupName="profileDistractingElements"
-                      groupLabel="Distracting Elements Profile"
-                      .options=${[
-                        { name: 'visible', label: 'Visible' },
-                        { name: 'limited', label: 'Limited' },
-                        { name: 'hidden', label: 'Hidden' },
-                        { name: 'custom', label: 'Custom' },
-                      ]}
-                      .groupValue=${this.youtubeConfig
-                        .profileDistractingElements}
-                    ></radio-group>
+                ${
+                  this.youtubeConfig.profileDistractingElements === 'custom'
+                    ? html`<div class="mt-8">
+                        <radio-group
+                          groupName="previewsState"
+                          groupLabel="Previews State"
+                          .options=${[
+                            { name: 'visible', label: 'Visible' },
+                            { name: 'hoverVideo', label: 'Hover Video' },
+                            { name: 'hoverImg', label: 'Hover Img' },
+                            {
+                              name: 'hidden',
+                              label: 'Hidden',
+                              description: 'This is an option description',
+                            },
+                          ]}
+                          .groupValue=${this.youtubeConfig.previewsState}
+                        ></radio-group>
 
-                    ${this.youtubeConfig.profileDistractingElements === 'custom'
-                      ? html`<div class="mt-8">
-                          <radio-group
-                            groupName="previewsState"
-                            groupLabel="Previews State"
-                            .options=${[
-                              { name: 'visible', label: 'Visible' },
-                              { name: 'hoverVideo', label: 'Hover Video' },
-                              { name: 'hoverImg', label: 'Hover Img' },
-                              {
-                                name: 'hidden',
-                                label: 'Hidden',
-                                description: 'This is an option description',
-                              },
-                            ]}
-                            .groupValue=${this.youtubeConfig.previewsState}
-                          ></radio-group>
+                        <checkbox-item
+                          itemName="hideHomeFeedFilterBar"
+                          itemLabel="Hide Home Feed FilterBar"
+                          itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed nunc nec felis imperdiet fermentum. Donec at turpis ac risus aliquet auctor. Pellentesque mollis fermentum lacus, sed auctor libero elementum et. "
+                          .itemValue=${this.youtubeConfig.hideHomeFeedFilterBar}
+                        ></checkbox-item>
 
-                          <checkbox-item
-                            itemName="hideHomeFeedFilterBar"
-                            itemLabel="Hide Home Feed FilterBar"
-                            itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed nunc nec felis imperdiet fermentum. Donec at turpis ac risus aliquet auctor. Pellentesque mollis fermentum lacus, sed auctor libero elementum et. "
-                            .itemValue=${this.youtubeConfig
-                              .hideHomeFeedFilterBar}
-                          ></checkbox-item>
+                        <checkbox-item
+                          itemName="hideExploreTabSidebar"
+                          itemLabel="Hide Explore Tab Sidebar"
+                          .itemValue=${this.youtubeConfig.hideExploreTabSidebar}
+                        ></checkbox-item>
 
-                          <checkbox-item
-                            itemName="hideExploreTabSidebar"
-                            itemLabel="Hide Explore Tab Sidebar"
-                            .itemValue=${this.youtubeConfig
-                              .hideExploreTabSidebar}
-                          ></checkbox-item>
+                        <checkbox-item
+                          itemName="grayNotificationCount"
+                          itemLabel="Gray Notification Count"
+                          itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                          .itemValue=${this.youtubeConfig.grayNotificationCount}
+                        ></checkbox-item>
 
-                          <checkbox-item
-                            itemName="grayNotificationCount"
-                            itemLabel="Gray Notification Count"
-                            itemDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                            .itemValue=${this.youtubeConfig
-                              .grayNotificationCount}
-                          ></checkbox-item>
-
-                          <checkbox-item
-                            itemName="hideCommentsSection"
-                            itemLabel="Hide Comments Section"
-                            .itemValue=${this.youtubeConfig.hideCommentsSection}
-                          ></checkbox-item>
-                        </div>`
-                      : null}
-                  </div>
-                </details>
+                        <checkbox-item
+                          itemName="hideCommentsSection"
+                          itemLabel="Hide Comments Section"
+                          .itemValue=${this.youtubeConfig.hideCommentsSection}
+                        ></checkbox-item>
+                      </div>`
+                    : null
+                }
+              </div>`
+                )}
               </section>
             </div>`
           : null}

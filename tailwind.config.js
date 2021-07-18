@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   mode: 'jit',
   purge: [
@@ -8,7 +10,17 @@ module.exports = {
   ],
   darkMode: false,
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        extended: ['Monument Extended', ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        black: {
+          DEFAULT: '#0C0C0D',
+        },
+      },
+    },
   },
   variants: {
     extend: {},

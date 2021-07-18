@@ -10,9 +10,13 @@
       content="Configure your settings for the JOMO extension."
     />
   </head>
-  <body>
+  <body class="text-black">
+    <script
+      type="application/javascript"
+      src="browser-polyfill.min.js"
+    ></script>
     <script type="module" src="./src/options/main.ts"></script>
-    <aside>
+    <!-- <aside>
       <nav>
         <ul class="fixed flex flex-col transform -translate-y-1/2 font-semibold space-y-1" style="top: 50vh;">
           <li>
@@ -26,23 +30,18 @@
           </li>
         </ul>
       </nav>
-    </aside>
+    </aside> -->
     <div class="wrapper">
       <main class="my-20">
-        <h1 class="text-5xl font-black">Settings</h1>
-        <p class="mt-3">Activate the pages you want to make less addictive.</p>
+        <h1 class="text-[2.5rem] leading-8 font-bold font-extended">
+          Settings
+        </h1>
+        <p class="mt-4">Activate the pages you want to make less addictive.</p>
         <section class="pt-8 mt-4" id="youtube">
           <youtube-options></youtube-options>
         </section>
         <section class="pt-8 mt-4" id="twitter">
-          <div>
-            <h1 class="text-3xl font-extrabold">Twitter</h1>
-          </div>
-        </section>
-        <section class="pt-8 mt-4" id="facebook">
-          <div>
-            <h1 class="text-3xl font-extrabold">Facebook</h1>
-          </div>
+          <twitter-options></twitter-options>
         </section>
       </main>
     </div>

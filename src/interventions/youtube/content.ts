@@ -1,7 +1,5 @@
 /* global patchOrAddPatchCSS documentReady */
 
-// import { browser } from 'webextension-polyfill-ts';
-
 import { defaultYouTubeConfig, profiles } from './defaults';
 import { profileNames, YoutubeSettings } from './types';
 

@@ -1,4 +1,3 @@
-// import { browser } from 'webextension-polyfill-ts';
 import { EventObject } from 'xstate';
 
 export const isProd = import.meta.env.PROD;

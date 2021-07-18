@@ -1,4 +1,3 @@
-import { createMachine } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 
 import { defaultYouTubeConfig } from '../interventions/youtube/defaults';
@@ -60,7 +59,7 @@ const setContextConfig = machineModel.assign({
   },
 });
 
-export const machine = createMachine<typeof machineModel>(
+export const machine = machineModel.createMachine(
   {
     id: 'settings',
     context: machineModel.initialContext,
@@ -102,8 +101,10 @@ export const machine = createMachine<typeof machineModel>(
 
 export const machineWithActions = machine.withConfig({
   actions: {
-    updateRemoteConfig: (context) =>
-      setStorageConfig('youtubeConfig', context.youtubeConfig),
+    updateRemoteConfig: (context, event) => {
+      assertEventType(event, 'UPDATE_CONFIG');
+      setStorageConfig(event.changed.source, context[event.changed.source]);
+    },
   },
   services: {
     fetchRemoteConfig: () => fetchStorageConfig(configKeysArray),

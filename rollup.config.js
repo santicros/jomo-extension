@@ -34,6 +34,7 @@ const contentScript = (name) => ({
 
 const youtubeContent = contentScript('youtube');
 const twitterContent = contentScript('twitter');
+// const instagramContent = contentScript('instagram');
 
 /** @type {RollupOptions} */
 const twitterInPage = {
@@ -56,4 +57,10 @@ const utils = {
   treeshake: false,
 };
 
-export default [youtubeContent, twitterContent, twitterInPage, utils];
+export default [
+  youtubeContent,
+  twitterContent,
+  twitterInPage,
+  // instagramContent,
+  utils,
+];

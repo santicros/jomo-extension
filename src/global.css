@@ -7,6 +7,14 @@
   src: url('./assets/Inter-roman.var.woff2?v=3.18') format('woff2');
 }
 
+@font-face {
+  font-family: 'Monument Extended';
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+  src: url('./assets/monumentextended-bold.woff2') format('woff2');
+}
+
 @tailwind base;
 @tailwind components;
 

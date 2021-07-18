@@ -1,0 +1,12 @@
+/* -------------- PROFILE PAGE -------------- */
+/* Remove metrics */
+html[data-is-active] li.Y8-fY > a span {
+  display: none;
+}
+html[data-is-active] li.Y8-fY > span > span {
+  display: none;
+}
+
+html[data-is-active] article a .qn-0x li span:first-child {
+  display: none;
+}

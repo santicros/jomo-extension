@@ -1,5 +1,5 @@
 {
-  "name": "extension-attention",
+  "name": "jomo",
   "version": "0.0.1",
   "author": {
     "name": "Santi Cros",
@@ -23,33 +23,33 @@
     "format": "prettier --write './**/*.{js,ts,css,md,json,html}' --config ./.prettierrc"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^19.0.0",
-    "@rollup/plugin-node-resolve": "^13.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.26.0",
-    "@typescript-eslint/parser": "^4.26.0",
+    "@rollup/plugin-commonjs": "^19.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
     "@xstate/inspect": "^0.4.1",
-    "autoprefixer": "^10.2.6",
+    "autoprefixer": "^10.3.1",
     "concurrently": "^6.2.0",
-    "esbuild": "^0.12.5",
-    "eslint": "^7.27.0",
+    "esbuild": "^0.12.15",
+    "eslint": "^7.31.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "fs-extra": "^10.0.0",
-    "postcss": "^8.3.0",
-    "prettier": "^2.3.0",
+    "postcss": "^8.3.5",
+    "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.50.5",
+    "rollup": "^2.53.2",
     "rollup-plugin-copy": "^3.4.0",
-    "rollup-plugin-esbuild": "^4.2.3",
-    "tailwindcss": "^2.1.2",
-    "typescript": "^4.3.2",
-    "vite": "^2.3.5",
-    "web-ext": "^6.1.0",
-    "webextension-polyfill-ts": "^0.25.0"
+    "rollup-plugin-esbuild": "^4.5.0",
+    "tailwindcss": "^2.2.4",
+    "typescript": "^4.3.5",
+    "vite": "^2.4.2",
+    "web-ext": "^6.2.0",
+    "webextension-polyfill-ts": "^0.26.0"
   },
   "dependencies": {
     "lit": "^2.0.0-rc.2",
-    "xstate": "^4.20.0"
+    "xstate": "^4.23.0"
   }
 }

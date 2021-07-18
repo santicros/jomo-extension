@@ -26,7 +26,7 @@ export class RadioGroup extends LitElement {
   render() {
     return html`<fieldset>
       <legend>
-        <h3 class="text-sm font-extrabold uppercase tracking-wide">
+        <h3 class="text-sm font-bold uppercase tracking-wide">
           ${this.groupLabel}
         </h3>
         <p class="text-sm">${this.groupDescription}</p>
