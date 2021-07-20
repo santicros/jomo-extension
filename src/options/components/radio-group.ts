@@ -29,7 +29,9 @@ export class RadioGroup extends LitElement {
         <h3 class="text-sm font-bold uppercase tracking-wide">
           ${this.groupLabel}
         </h3>
-        <p class="text-sm">${this.groupDescription}</p>
+        ${this.groupDescription
+          ? html`<p class="mt-1 mb-1 text-sm">${this.groupDescription}</p>`
+          : null}
       </legend>
       ${this.options?.length &&
       html`
@@ -47,7 +49,7 @@ export class RadioGroup extends LitElement {
                 />
                 <label
                   for=${this.groupName + '_' + option.name}
-                  class="block p-2 pl-9 rounded"
+                  class="block p-2 pl-9 rounded text-base"
                 >
                   <span>${option.label}</span>
                   ${option.description
