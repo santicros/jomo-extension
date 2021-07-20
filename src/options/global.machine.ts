@@ -91,22 +91,22 @@ export const machine = machineModel.createMachine(
     actions: {
       setContextConfig: setContextConfig,
       updateContextConfig: updateContextConfig,
-      updateRemoteConfig: () => {},
+      updateRemoteConfig: (context, event) => {
+        assertEventType(event, 'UPDATE_CONFIG');
+        setStorageConfig(event.changed.source, context[event.changed.source]);
+      },
     },
     services: {
-      fetchRemoteConfig: async () => ({}),
+      fetchRemoteConfig: () => fetchStorageConfig(configKeysArray),
     },
   }
 );
 
-export const machineWithActions = machine.withConfig({
+export const mockMachine = machine.withConfig({
   actions: {
-    updateRemoteConfig: (context, event) => {
-      assertEventType(event, 'UPDATE_CONFIG');
-      setStorageConfig(event.changed.source, context[event.changed.source]);
-    },
+    updateRemoteConfig: () => {},
   },
   services: {
-    fetchRemoteConfig: () => fetchStorageConfig(configKeysArray),
+    fetchRemoteConfig: async () => ({}),
   },
 });

@@ -5,11 +5,8 @@ import './components/twitter-options';
 
 import { interpret } from 'xstate';
 
-import { machine, machineWithActions } from './global.machine';
+import { machine, mockMachine } from './global.machine';
 import { ChangeEventPayload, ConfigKey, isProd } from './utils';
-
-const youtubeEl = document.querySelector('youtube-options');
-const twitterEl = document.querySelector('twitter-options');
 
 // import { inspect } from '@xstate/inspect';
 
@@ -17,8 +14,11 @@ const twitterEl = document.querySelector('twitter-options');
 //   iframe: false,
 // });
 
-const service = interpret(isProd ? machineWithActions : machine, {
-  devTools: true,
+const youtubeEl = document.querySelector('youtube-options');
+const twitterEl = document.querySelector('twitter-options');
+
+const service = interpret(isProd ? machine : mockMachine, {
+  devTools: !isProd,
 })
   .onTransition((state) => {
     if (state.changed) {
@@ -53,8 +53,8 @@ const onInputChange = (e: Event, source: ConfigKey) => {
 };
 
 function main() {
-  if (youtubeEl) youtubeEl.youtubeConfig = service.state.context.youtubeConfig;
-  if (twitterEl) twitterEl.config = service.state.context.twitterConfig;
+  if (youtubeEl) youtubeEl.youtubeConfig = service.state.context?.youtubeConfig;
+  if (twitterEl) twitterEl.config = service.state.context?.twitterConfig;
 
   service.send('LOAD_CONFIG');
 

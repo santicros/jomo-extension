@@ -2,12 +2,13 @@
   "author": "Santi Cros",
   "homepage_url": "https://www.feelthejomo.com/",
   "manifest_version": 2,
-  "name": "jomo",
+  "name": "JOMO",
   "short_name": "JOMO",
   "version": "0.0.1",
-  "description": "Make internet a healthier place",
+  "description": "Limit addictive and distracting behaviours of webpages like YouTube, Twitter and others, and enjoy what really matters.",
   "icons": {
-    "64": "assets/icons/icon.png"
+    "32": "assets/icons/icon-32.png",
+    "64": "assets/icons/icon-64.png"
   },
   "options_ui": {
     "page": "options.html",
@@ -15,13 +16,31 @@
     "browser_style": false,
     "chrome_style": false
   },
-  "page_action": {
+  "browser_action": {
+    "browser_style": false,
     "default_icon": {
-      "64": "assets/icons/icon.png"
+      "32": "assets/icons/icon-32.png",
+      "64": "assets/icons/icon-64.png"
     },
-    "show_matches": ["*://*.twitter.com/*", "*://*.youtube.com/*"],
+    "theme_icons": [
+      {
+        "light": "assets/icons/icon-16_white.png",
+        "dark": "assets/icons/icon-16.png",
+        "size": 16
+      },
+      {
+        "light": "assets/icons/icon-32_white.png",
+        "dark": "assets/icons/icon-32.png",
+        "size": 32
+      },
+      {
+        "light": "assets/icons/icon-64_white.png",
+        "dark": "assets/icons/icon-64.png",
+        "size": 64
+      }
+    ],
     "default_popup": "popup.html",
-    "default_title": "disconnect page"
+    "default_title": "JOMO"
   },
   "content_scripts": [
     {
