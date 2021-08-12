@@ -1,7 +1,11 @@
-/* global patchOrAddPatchCSS documentReady setOrDeleteDataAttr */
+/* global patchOrAddPatchCSS documentReady setOrDeleteDataAttr setDataAttrsObj generateConfigWithProfiles */
 
 import { defaultYouTubeConfig, profiles } from './defaults';
-import { profileNames, YoutubeSettings } from './types';
+import type { YoutubeSettings } from './types';
+import { profileNames } from './types';
+
+type Config = YoutubeSettings;
+const configKey = 'youtubeConfig';
 
 const docEl = document.documentElement;
 
@@ -19,30 +23,10 @@ display: none;
   );
 }
 
-function generateConfigWithProfiles(config: typeof defaultYouTubeConfig) {
-  let configWithProfiles = {
-    ...defaultYouTubeConfig,
-    ...config,
-  };
-
-  profileNames.forEach((profileName) => {
-    const profileStatus = config[profileName];
-    if (profileStatus && profileStatus !== 'custom') {
-      const profile = profiles[profileName];
-      configWithProfiles = {
-        ...configWithProfiles,
-        ...profile[profileStatus],
-      };
-    }
-  });
-
-  return configWithProfiles;
-}
-
 /**
  * Main executed after DOM loaded
  */
-function startOnDOMLoaded(config: typeof defaultYouTubeConfig) {
+function startOnDOMLoaded(config: Config) {
   if (config.recommendationsHomeState === 'limited') {
     if (config.recommendationsHomeLimitedNum) {
       dynamicLimitHomeRecommendations(config.recommendationsHomeLimitedNum);
@@ -50,53 +34,57 @@ function startOnDOMLoaded(config: typeof defaultYouTubeConfig) {
   }
 }
 
-function setDataAttrsObj(configObj: YoutubeSettings) {
-  Object.entries(configObj).forEach(([key, value]) => {
-    setOrDeleteDataAttr(docEl, key, value);
-  });
-}
-
-function setup(state: typeof defaultYouTubeConfig) {
+function setup(state: Config) {
   if (state.isActive) {
-    setDataAttrsObj(state);
+    setDataAttrsObj(docEl, state);
     documentReady(() => startOnDOMLoaded(state));
   } else {
     setOrDeleteDataAttr(docEl, 'isActive', false);
   }
 }
 
-function logStorageChange(changes) {
+function onStorageChanged(changes: { [configKey]?: { newValue: Config } }) {
+  if (!changes?.[configKey]?.newValue) return;
+
   console.log('logStorageChange', changes);
 
-  const newStoredConfig = changes.youtubeConfig.newValue;
-  const newConfig = {
+  const newStoredConfig = changes[configKey]!.newValue;
+  const newConfig: Config = {
     ...defaultYouTubeConfig,
     ...newStoredConfig,
   };
-  const conf = generateConfigWithProfiles(newConfig);
+  const conf = generateConfigWithProfiles(
+    newConfig,
+    defaultYouTubeConfig,
+    profileNames,
+    profiles
+  );
   setup(conf);
 }
 
 async function main() {
-  let storedConfig;
+  let storedConfig: { [configKey]: Config } | undefined;
   try {
-    storedConfig = await browser.storage.sync.get('youtubeConfig');
+    storedConfig = await browser.storage.sync.get(configKey);
   } catch (error) {
     console.error(error);
   }
 
-  browser.storage.onChanged.addListener(logStorageChange);
+  browser.storage.onChanged.addListener(onStorageChanged);
 
   if (!storedConfig) return;
 
-  if (storedConfig) {
-    let config: typeof defaultYouTubeConfig = {
-      ...defaultYouTubeConfig,
-      ...storedConfig.youtubeConfig,
-    };
-    const newConfig = generateConfigWithProfiles(config);
-    setup(newConfig);
-  }
+  const config: Config = {
+    ...defaultYouTubeConfig,
+    ...storedConfig[configKey],
+  };
+  const newConfig = generateConfigWithProfiles(
+    config,
+    defaultYouTubeConfig,
+    profileNames,
+    profiles
+  );
+  setup(newConfig);
 }
 
 main();

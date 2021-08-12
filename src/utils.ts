@@ -56,3 +56,34 @@ function setOrDeleteDataAttr(
   }
   docEl.dataset[name] = String(value);
 }
+
+function setDataAttrsObj(docEl: HTMLElement, configObj) {
+  Object.entries(configObj).forEach(([key, value]) => {
+    setOrDeleteDataAttr(docEl, key, value);
+  });
+}
+
+function generateConfigWithProfiles(
+  config,
+  defaultConfig,
+  profileNames,
+  profiles
+) {
+  let configWithProfiles = {
+    ...defaultConfig,
+    ...config,
+  };
+
+  profileNames.forEach((profileName) => {
+    const profileStatus = config[profileName];
+    if (profileStatus && profileStatus !== 'custom') {
+      const profile = profiles[profileName];
+      configWithProfiles = {
+        ...configWithProfiles,
+        ...profile[profileStatus],
+      };
+    }
+  });
+
+  return configWithProfiles;
+}
