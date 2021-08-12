@@ -1,14 +1,18 @@
 import { html, TemplateResult } from 'lit';
 
-export function headerSection(title: string, isActive: boolean) {
+export function headerSection(key: string, title: string, isActive: boolean) {
   return html`
     <div
       class="flex items-center justify-between sticky top-0 bg-white/90 z-20 py-2"
     >
-      <label for="isActive" class="flex-1 cursor-pointer">
+      <label for="isActive-${key}" class="flex-1 cursor-pointer">
         <h2 class="inline-block text-3xl font-extrabold">${title}</h2>
       </label>
-      <toggle-switch inputId="isActive" ?ischecked=${isActive}></toggle-switch>
+      <toggle-switch
+        sourceKey="isActive"
+        inputId="isActive-${key}"
+        ?ischecked=${isActive}
+      ></toggle-switch>
     </div>
   `;
 }

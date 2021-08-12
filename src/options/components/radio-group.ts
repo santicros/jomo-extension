@@ -40,6 +40,7 @@ export class RadioGroup extends LitElement {
             (option) =>
               html`<div class="block relative">
                 <input
+                  data-source-key=${ifDefined(this.groupName)}
                   class="absolute top-1/2 left-3 transform -translate-y-1/2 z-10"
                   type="radio"
                   id=${this.groupName + '_' + option.name}

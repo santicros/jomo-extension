@@ -20,7 +20,7 @@ export class YoutubeOptions extends LitElement {
   render() {
     return html`
       <div>
-        ${headerSection('YouTube', this.youtubeConfig.isActive)}
+        ${headerSection('youtube', 'YouTube', this.youtubeConfig.isActive)}
         ${this.youtubeConfig.isActive
           ? html`<div class="mt-4 space-y-6">
               <section>
@@ -29,18 +29,23 @@ export class YoutubeOptions extends LitElement {
                   html`<radio-group
                       groupName="profileRecommendations"
                       groupLabel="Recommendations Profile"
-                      groupDescription="Algorithmic recommendations make you stay more time than expected on the platform. By default they show on your homescreen, at the side of a video and at the end of it, at the explore tab and many other places."
+                      groupDescription="Algorithmic recommendations make you stay more time than expected on the platform."
                       .options=${[
                         {
                           name: 'visible',
                           label: 'Show',
+                          description: 'Default addictive page behavior.',
                         },
-                        { name: 'limited', label: 'Limit' },
+                        {
+                          name: 'limited',
+                          label: 'Limit',
+                          description:
+                            'Remove and limit some unnecesary recommendations.',
+                        },
                         {
                           name: 'hidden',
                           label: 'Hide',
-                          description:
-                            'Remove all addictive algoritmic recommendations',
+                          description: 'Remove all recommendations.',
                         },
                         { name: 'custom', label: 'Custom' },
                       ]}
@@ -117,7 +122,11 @@ export class YoutubeOptions extends LitElement {
                       groupName="profileMetrics"
                       groupLabel="Metrics Profile"
                       .options=${[
-                        { name: 'visible', label: 'Show' },
+                        {
+                          name: 'visible',
+                          label: 'Show',
+                          description: 'Default page behavior.',
+                        },
                         { name: 'hidden', label: 'Hide' },
                         { name: 'custom', label: 'Custom' },
                       ]}
@@ -156,7 +165,11 @@ export class YoutubeOptions extends LitElement {
                   groupName="profileDistractingElements"
                   groupLabel="Distracting Elements Profile"
                   .options=${[
-                    { name: 'visible', label: 'Show' },
+                    {
+                      name: 'visible',
+                      label: 'Show',
+                      description: 'Default page behavior.',
+                    },
                     { name: 'limited', label: 'Limit' },
                     { name: 'hidden', label: 'Hide' },
                     { name: 'custom', label: 'Custom' },

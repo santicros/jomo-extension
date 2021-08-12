@@ -1,4 +1,4 @@
-/* global patchOrAddPatchCSS documentReady */
+/* global patchOrAddPatchCSS documentReady setOrDeleteDataAttr */
 
 import { defaultYouTubeConfig, profiles } from './defaults';
 import { profileNames, YoutubeSettings } from './types';
@@ -50,24 +50,9 @@ function startOnDOMLoaded(config: typeof defaultYouTubeConfig) {
   }
 }
 
-/**
- * Util to add or delete data attr
- */
-function setOrDeleteDataAttr(
-  name: string,
-  value: number | boolean | string | undefined
-) {
-  // If value is false, null,... we remove it
-  if (!value) {
-    delete docEl.dataset[name];
-    return;
-  }
-  docEl.dataset[name] = String(value);
-}
-
 function setDataAttrsObj(configObj: YoutubeSettings) {
   Object.entries(configObj).forEach(([key, value]) => {
-    setOrDeleteDataAttr(key, value);
+    setOrDeleteDataAttr(docEl, key, value);
   });
 }
 
@@ -76,17 +61,12 @@ function setup(state: typeof defaultYouTubeConfig) {
     setDataAttrsObj(state);
     documentReady(() => startOnDOMLoaded(state));
   } else {
-    setOrDeleteDataAttr('isActive', false);
+    setOrDeleteDataAttr(docEl, 'isActive', false);
   }
 }
 
 function logStorageChange(changes) {
   console.log('logStorageChange', changes);
-  let changedItems = Object.keys(changes);
-  for (let item of changedItems) {
-    console.log(item + ' has changed. New value:');
-    console.log(changes[item].newValue);
-  }
 
   const newStoredConfig = changes.youtubeConfig.newValue;
   const newConfig = {

@@ -13,6 +13,9 @@ export class ToggleSwitch extends LitElement {
   @property()
   inputId = '';
 
+  @property()
+  sourceKey = '';
+
   render() {
     return html`<div
       class="relative inline-block w-12 h-6 ${classMap({
@@ -20,6 +23,7 @@ export class ToggleSwitch extends LitElement {
       })}"
     >
       <input
+        data-source-key=${this.sourceKey}
         id=${this.inputId}
         type="checkbox"
         ?checked=${this.isChecked}

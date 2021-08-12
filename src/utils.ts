@@ -40,3 +40,19 @@ function documentReady(fn) {
     document.addEventListener('DOMContentLoaded', fn);
   }
 }
+
+/**
+ * Util to add or delete data attr
+ */
+function setOrDeleteDataAttr(
+  docEl: HTMLElement,
+  name: string,
+  value: number | boolean | string | undefined
+) {
+  // If value is false, null,... we remove it
+  if (!value) {
+    delete docEl.dataset[name];
+    return;
+  }
+  docEl.dataset[name] = String(value);
+}

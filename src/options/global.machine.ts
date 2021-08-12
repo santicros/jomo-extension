@@ -1,5 +1,6 @@
 import { createModel } from 'xstate/lib/model';
 
+import { defaultTwitterConfig } from '../interventions/twitter/defaults';
 import { defaultYouTubeConfig } from '../interventions/youtube/defaults';
 import {
   assertEventType,
@@ -8,8 +9,6 @@ import {
   fetchStorageConfig,
   setStorageConfig,
 } from './utils';
-
-const defaultTwitterConfig = {};
 
 const machineModel = createModel(
   {
@@ -34,6 +33,7 @@ const machineModel = createModel(
 
 const updateContextConfig = machineModel.assign((context, event) => {
   assertEventType(event, 'UPDATE_CONFIG');
+  console.log('changed', event);
   return {
     [event.changed.source]: {
       ...context[event.changed.source],

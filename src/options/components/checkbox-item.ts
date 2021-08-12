@@ -23,6 +23,7 @@ export class CheckboxItem extends LitElement {
   render() {
     return html`<div class="flex items-center border-b">
       <input
+        data-source-key=${ifDefined(this.itemName)}
         class="order-2 flex-shrink-0"
         type="checkbox"
         name=${ifDefined(this.itemName)}
