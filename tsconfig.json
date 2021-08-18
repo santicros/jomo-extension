@@ -7,7 +7,8 @@
     "checkJs": true,
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false
   },
   "exclude": ["node_modules", "dist"]
 }

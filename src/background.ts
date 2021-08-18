@@ -3,10 +3,6 @@ function handleInstalled(details) {
 
   // First install
   if (!details.reason || details.reason === 'install') {
-    // Go to welcome with options
-    //   browser.tabs.create({
-    //     url: 'https://example.com',
-    //   });
     const openingPage = browser.runtime.openOptionsPage();
   }
 
@@ -20,4 +16,10 @@ function handleInstalled(details) {
   }
 }
 
+function handleIconClick() {
+  browser.runtime.openOptionsPage();
+}
+
 browser.runtime.onInstalled.addListener(handleInstalled);
+
+browser.browserAction.onClicked.addListener(handleIconClick);

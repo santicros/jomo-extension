@@ -39,7 +39,6 @@
         "size": 64
       }
     ],
-    "default_popup": "popup.html",
     "default_title": "JOMO"
   },
   "content_scripts": [
