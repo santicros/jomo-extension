@@ -1,21 +1,36 @@
 <p align="center">
-  <a href="https://nextjs.org">
+  <!-- <a href="https://nextjs.org">
     <img src="https://assets.vercel.com/image/upload/v1607554385/repositories/next-js/next-logo.png" alt="JOMO" height="70">
-  </a>
+  </a> -->
+  <h1 align="center">JOMO</h1>
   <p align="center">A browser extension to remove distractions and enjoy what matters.</p>
 </p>
 
 # JOMO
 
-A simpler static site generator. An alternative to Jekyll. Written in JavaScript. Transforms a directory of templates (of varying types) into HTML.
-
-Works with HTML, Markdown, Liquid, Nunjucks, Handlebars, Mustache, EJS, Haml, Pug, and JavaScript Template Literals.
+JOMO is a browser extension that makes websites less addictive.
 
 Visit [https://www.feelthejomo.com/](https://www.feelthejomo.com/) to learn more.
 
-## Features
+## Development
 
-- **Thing** - use your favorite editors and workflow
+Install the dependencies:
+
+```sh
+npm install
+```
+
+Build the extension:
+
+```sh
+npm run build
+```
+
+Test the extension:
+
+```sh
+npm run dev:ext
+```
 
 ## Made with
 
