@@ -66,8 +66,7 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": ["activeTab", "storage"],
-  "web_accessible_resources": ["interventions/twitter/in_page.js"],
+  "permissions": ["storage"],
   "browser_specific_settings": {
     "gecko": {
       "id": "scros97@gmail.com"

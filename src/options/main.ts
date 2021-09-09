@@ -31,7 +31,6 @@ const service = interpret(isProd ? machine : mockMachine, {
   .start();
 
 const getChangedValue = (target: HTMLInputElement) => {
-  if (target.type !== 'checkbox' && target.type !== 'radio') return;
   const property = target.dataset.sourceKey;
   if (target.type === 'checkbox') {
     return {
@@ -42,6 +41,11 @@ const getChangedValue = (target: HTMLInputElement) => {
     return {
       property,
       value: target.dataset.value,
+    } as ChangeEventPayload;
+  } else if (target.type === 'number') {
+    return {
+      property,
+      value: String(target.valueAsNumber),
     } as ChangeEventPayload;
   }
 };
@@ -60,12 +64,20 @@ function main() {
 
   service.send('LOAD_CONFIG');
 
-  youtubeEl?.addEventListener('change', (e) =>
-    onInputChange(e, 'youtubeConfig')
-  );
-  twitterEl?.addEventListener('change', (e) =>
-    onInputChange(e, 'twitterConfig')
-  );
+  youtubeEl?.addEventListener('change', (e) => {
+    if (e.target.type !== 'checkbox' && e.target.type !== 'radio') return;
+    onInputChange(e, 'youtubeConfig');
+  });
+
+  youtubeEl?.addEventListener('input', (e) => {
+    if (e.target.type !== 'number') return;
+    onInputChange(e, 'youtubeConfig');
+  });
+
+  twitterEl?.addEventListener('change', (e) => {
+    if (e.target.type !== 'checkbox' && e.target.type !== 'radio') return;
+    onInputChange(e, 'twitterConfig');
+  });
 }
 
 main();

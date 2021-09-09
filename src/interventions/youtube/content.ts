@@ -12,7 +12,7 @@ const docEl = document.documentElement;
 function dynamicLimitHomeRecommendations(recommendationNum: number) {
   const css = (num: number) => `
 [data-is-active][data-recommendations-home-state="limited"] ytd-rich-item-renderer:nth-child(n + ${
-    num + 1
+    +num + 1
   }) {
 display: none;
 }`;

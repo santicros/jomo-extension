@@ -60,7 +60,7 @@ const utils = {
 export default [
   youtubeContent,
   twitterContent,
-  twitterInPage,
+  // twitterInPage,
   // instagramContent,
   utils,
 ];

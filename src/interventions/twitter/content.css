@@ -6,19 +6,32 @@ html[data-is-active] [data-testid='AppTabBar_Explore_Link'] {
 /* -------------- ASIDE RIGHT -------------- */
 
 /* You might like */
-html[data-is-active] aside[role='complementary'] {
-  opacity: 0.1;
+/* html[data-is-active] aside[role='complementary'] {
+  display: none;
 }
 
 html[data-is-active] [data-testid='sidebarColumn'] [role='region'] {
-  opacity: 0.1;
+  display: none;
+} */
+
+html[data-is-active] [data-testid='sidebarColumn'] .css-1dbjc4n.r-vacyoi.r-ttdzmv > div {
+  display: none;
+}
+html[data-is-active] [data-testid='sidebarColumn'] .css-1dbjc4n.r-vacyoi.r-ttdzmv > div:first-child {
+  display: initial;
+}
+html[data-is-active] [data-testid='sidebarColumn'] .css-1dbjc4n.r-vacyoi.r-ttdzmv > div:last-child {
+  display: initial;
+}
+html[data-is-active] [data-testid='sidebarColumn'] .css-1dbjc4n.r-vacyoi.r-ttdzmv > div:nth-child(2) {
+  display: initial;
 }
 
 /* -------------- WITHOUT SIGNUP -------------- */
 
 /* Aside "New to Twitter?" */
 html[data-is-active] [data-testid='sidebarColumn'] [aria-label='Sign up'] {
-  opacity: 0.1;
+  display: none;
 }
 
 /* -------------- PRIMARY COLUMN -------------- */
@@ -35,62 +48,38 @@ html[data-is-active] [data-testid='like'] > div > div:last-child,
   display: none;
 }
 
-/* Followers & Following Main Profile */
-html[data-is-active]
-  [data-testid='primaryColumn']
-  div.r-13awgt0:nth-child(5)
-  a {
-  display: inherit;
+/* Followers & Following Main Profile & Hover opups*/
+html[data-is-active] [href$='/following'] {
+  display: flex;
 }
-html[data-is-active]
-  [data-testid='primaryColumn']
-  div.r-13awgt0:nth-child(5)
-  a
-  > span:first-child {
+html[data-is-active] [href$='/following'] > span:first-child {
   display: none;
 }
-
-/* [aria-label] {
-  border: 2px solid red;
+html[data-is-active] [href$='/followers'] {
+  display: flex;
 }
-[data-testid] {
-  border: 2px solid orange;
-}
-[role="region"] {
-  border: 2px solid green;
-} */
-
-/* [data-testid="tweet"] ~ div > div:nth-child(4) [role="link"] {
-  display: inherit;
-} */
-/* 
-[data-testid="tweet"] ~ div > div:nth-child(3) [role="link"] > div,
-[data-testid="tweet"] ~ div > div:nth-child(4) [role="link"] > div {
+html[data-is-active] [href$='/followers'] > span:first-child {
   display: none;
-} */
+}
 
 /* -------------- TWEET VIEW -------------- */
 
-html[data-is-active]
-  [aria-label='Timeline: Conversation']
-  [data-testid='reply']
-  > div
-  > div:last-child {
-  display: block;
+/* Hide metrics inside tweet view */
+html[data-is-active] article [href$='/likes'] {
+  display: flex;
 }
-html[data-is-active]
-  [aria-label='Timeline: Conversation']
-  [data-testid='retweet']
-  > div
-  > div:last-child,
-[data-testid='unretweet'] > div > div:last-child {
-  display: block;
+html[data-is-active] article [href$='/likes'] > div {
+  display: none;
 }
-html[data-is-active]
-  [aria-label='Timeline: Conversation']
-  [data-testid='like']
-  > div
-  > div:last-child,
-[data-testid='unlike'] > div > div:last-child {
-  display: block;
+html[data-is-active] article [href$='/retweets'] {
+  display: flex;
+}
+html[data-is-active] article [href$='/retweets'] > div {
+  display: none;
+}
+html[data-is-active] article [href$='/retweets/with_comments'] {
+  display: flex;
+}
+html[data-is-active] article [href$='/retweets/with_comments'] > div {
+  display: none;
 }
