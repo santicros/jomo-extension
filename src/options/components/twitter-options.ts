@@ -23,12 +23,24 @@ export class TwitterOptions extends LitElement {
       ${this.twitterConfig.isActive
         ? html`<div class="mt-4 space-y-6">
             <section>
+              ${expandableCard(
+                'Recommendations, Metrics & Others',
+                html`<div>
+                  <p>You are now limiting Twitter's addictive behavoirs.</p>
+                  <p>
+                    Metrics, side recommendations and other distracting elements
+                    aren't being shown.
+                  </p>
+                </div>`
+              )}
+            </section>
+            <!-- <section>
               ${expandableCard('Recommendations', 'settings rec')}
             </section>
             <section>${expandableCard('Metrics', 'settings metr')}</section>
             <section>
               ${expandableCard('Distracting Elements', 'settings distr')}
-            </section>
+            </section> -->
           </div>`
         : null}
     </div> `;
