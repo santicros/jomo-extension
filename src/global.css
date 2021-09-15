@@ -18,6 +18,10 @@
 @tailwind base;
 @tailwind components;
 
+body {
+  font-size: 1rem;
+}
+
 @supports (font-variation-settings: normal) {
   html {
     font-family: 'Inter var', sans-serif;

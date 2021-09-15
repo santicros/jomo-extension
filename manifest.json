@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "name": "JOMO",
   "short_name": "JOMO",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Limit addictive and distracting behaviours of webpages like YouTube, Twitter and others, and enjoy what really matters.",
   "icons": {
     "32": "assets/icons/icon-32.png",
