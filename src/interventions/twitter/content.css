@@ -14,16 +14,28 @@ html[data-is-active] [data-testid='sidebarColumn'] [role='region'] {
   display: none;
 } */
 
-html[data-is-active] [data-testid='sidebarColumn'] .css-1dbjc4n.r-vacyoi.r-ttdzmv > div {
+html[data-is-active]
+  [data-testid='sidebarColumn']
+  .css-1dbjc4n.r-vacyoi.r-ttdzmv
+  > div {
   display: none;
 }
-html[data-is-active] [data-testid='sidebarColumn'] .css-1dbjc4n.r-vacyoi.r-ttdzmv > div:first-child {
+html[data-is-active]
+  [data-testid='sidebarColumn']
+  .css-1dbjc4n.r-vacyoi.r-ttdzmv
+  > div:first-child {
   display: initial;
 }
-html[data-is-active] [data-testid='sidebarColumn'] .css-1dbjc4n.r-vacyoi.r-ttdzmv > div:last-child {
+html[data-is-active]
+  [data-testid='sidebarColumn']
+  .css-1dbjc4n.r-vacyoi.r-ttdzmv
+  > div:last-child {
   display: initial;
 }
-html[data-is-active] [data-testid='sidebarColumn'] .css-1dbjc4n.r-vacyoi.r-ttdzmv > div:nth-child(2) {
+html[data-is-active]
+  [data-testid='sidebarColumn']
+  .css-1dbjc4n.r-vacyoi.r-ttdzmv
+  > div:nth-child(2) {
   display: initial;
 }
 
